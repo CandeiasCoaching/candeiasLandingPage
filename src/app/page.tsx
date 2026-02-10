@@ -76,7 +76,7 @@ type SectionId = 'home' | 'about' | 'contact';
 
 export default function Home() {
   const [step, setStep] = useState<StepId>('plan');
-  const [headlineText, setHeadlineText] = useState(steps[0].label);
+  const [headlineText, setHeadlineText] = useState<string>(steps[0].label);
   const [plan, setPlan] = useState<PlanId | null>(null);
   const [activeSection, setActiveSection] = useState<SectionId>('home');
 
