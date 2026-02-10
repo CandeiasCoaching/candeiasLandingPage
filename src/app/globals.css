@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #050505;
+  color: #f5f5f5;
+}
+
+.font-serif {
+  font-family: var(--font-serif), "Times New Roman", serif;
+}
+
+.font-script {
+  font-family: var(--font-script), "Brush Script MT", cursive;
+}
+
+.font-title {
+  font-family: "Segoe UI", var(--font-inter), sans-serif;
+}
+
+.text-soft {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-glow {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 48%),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.07), transparent 45%),
+    radial-gradient(circle at 80% 35%, rgba(255, 255, 255, 0.05), transparent 50%);
+}
+
+.vignette {
+  background: radial-gradient(circle at 50% 30%, transparent 0%, rgba(0, 0, 0, 0.7) 70%);
+  opacity: 0.7;
+}
+
+.noise-overlay {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+.grain-overlay {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+}
