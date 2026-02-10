@@ -182,7 +182,7 @@ export default function Home() {
             ))}
           </div>
 
-          {step !== 'start' && promptText && (
+          {promptText && (
             <p className="mt-6 text-sm uppercase tracking-[0.3em] text-white/50">
               {promptText}
             </p>
