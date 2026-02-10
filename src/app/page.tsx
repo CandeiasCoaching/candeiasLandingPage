@@ -288,24 +288,24 @@ export default function Home() {
             <div className="text-left">
               <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">About</h2>
               <div className="mt-4 space-y-4 text-white/70">
-                <p>Hi, I'm Stef.</p>
+                <p>Hi, I&apos;m Stef.</p>
                 <p>
-                  I'm a personal trainer based in the Netherlands, and I'm here to help you
+                  I&apos;m a personal trainer based in the Netherlands, and I&apos;m here to help you
                   transform your physique and get in the best shape of your life.
                 </p>
                 <p>
                   My approach is grounded in evidence-based training and nutrition. I stay
                   current with the latest research to ensure my coaching methods are effective,
-                  safe, and tailored to what actually works - not just what's trendy.
+                  safe, and tailored to what actually works - not just what&apos;s trendy.
                 </p>
                 <p>
-                  I'd describe my coaching style as positive and encouraging. I believe in
+                  I&apos;d describe my coaching style as positive and encouraging. I believe in
                   smart, sustainable training that matches your effort to your goals. Progress
                   does not require destroying yourself in the gym seven days a week - it
                   requires the right program, consistency, and a plan that fits your life.
                 </p>
                 <p>
-                  Whether you're just starting out or looking to break through a plateau, I'm
+                  Whether you&apos;re just starting out or looking to break through a plateau, I&apos;m
                   here to guide you with a methodical, no-nonsense approach that gets results.
                 </p>
               </div>
