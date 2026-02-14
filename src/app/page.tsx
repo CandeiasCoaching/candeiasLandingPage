@@ -46,7 +46,7 @@ function OptionCard({
   );
 
   const baseClass = `group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] ${
-    sizeClassName ?? 'h-[176px] w-[255px]'
+    sizeClassName ?? 'h-[176px] w-[min(90vw,255px)]'
   }`;
 
   if (href) {
@@ -107,7 +107,7 @@ export default function Home() {
   return (
     <main
       ref={mainRef}
-      className="relative h-screen overflow-y-auto snap-y snap-mandatory text-white"
+      className="relative min-h-screen min-h-[100svh] overflow-y-auto snap-y md:snap-mandatory text-white"
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
         backgroundSize: 'cover',
@@ -116,8 +116,8 @@ export default function Home() {
       }}
     >
       <header className="relative z-20">
-        <nav className="fixed left-0 right-0 top-0 z-20 border-b border-white/10 bg-black/70 py-4 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur">
-          <div className="mx-auto flex w-[min(90%,920px)] items-center justify-end gap-6 text-xs uppercase tracking-[0.25em]">
+        <nav className="fixed left-0 right-0 top-0 z-20 border-b border-white/10 bg-black/70 py-3 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur md:py-4">
+          <div className="mx-auto flex w-[min(92%,920px)] flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-[0.22em] md:justify-end md:gap-6 md:text-xs md:tracking-[0.25em]">
             <button
               className="transition hover:text-white"
               onClick={() => {
@@ -153,11 +153,11 @@ export default function Home() {
       <section
         id="home"
         ref={homeRef}
-        className="relative z-10 mx-auto flex min-h-screen snap-start flex-col items-center justify-center px-6 pt-28 text-center scroll-mt-24 md:pt-32"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-24 text-center scroll-mt-24 md:min-h-screen md:pt-32"
       >
         <div
           ref={logoRef}
-          className="relative -mt-12 mb-6 flex h-[22rem] w-[22rem] items-center justify-center md:h-[26rem] md:w-[26rem]"
+          className="relative -mt-12 mb-6 flex h-[min(75vw,22rem)] w-[min(75vw,22rem)] items-center justify-center md:h-[26rem] md:w-[26rem]"
         >
           <Image
             src="/mockup/logo.png"
@@ -167,7 +167,7 @@ export default function Home() {
             priority
           />
         </div>
-        <h1 className="mt-12 text-[21px] font-semibold uppercase tracking-[0.32em] text-white/70">
+        <h1 className="mt-10 text-[15px] font-semibold uppercase tracking-[0.28em] text-white/70 sm:text-[19px] sm:tracking-[0.32em]">
           Training Program - Mealplan - 1to1 Contact
         </h1>
         <div className="relative z-10 mx-auto mt-8 w-full max-w-5xl px-6 pb-20 text-center">
@@ -193,7 +193,7 @@ export default function Home() {
               <OptionCard
                 title="Starter Online Coaching 4 Weeks"
                 image="/mockup/4weeks.jpg"
-                sizeClassName="h-[176px] w-[255px]"
+                sizeClassName="h-[176px] w-[min(90vw,255px)]"
                 titleClassName="absolute bottom-[10px] left-0 right-0 text-[15px] tracking-[0.26em] text-white/80 [font-variant:small-caps]"
                 onSelect={() => {
                   setHeadlineText('Starter Online Coaching 4 Weeks');
@@ -204,7 +204,7 @@ export default function Home() {
               <OptionCard
                 title="Starter Online Coaching 12 Weeks"
                 image="/mockup/12weeks.jpg"
-                sizeClassName="h-[176px] w-[255px]"
+                sizeClassName="h-[176px] w-[min(90vw,255px)]"
                 titleClassName="absolute bottom-[10px] left-0 right-0 text-[15px] tracking-[0.26em] text-white/80 [font-variant:small-caps]"
                 onSelect={() => {
                   setHeadlineText('Starter Online Coaching 12 Weeks');
@@ -215,7 +215,7 @@ export default function Home() {
               <OptionCard
                 title="Premium Online Coaching 12 Weeks"
                 image="/mockup/12weeks.jpg"
-                sizeClassName="h-[176px] w-[255px]"
+                sizeClassName="h-[176px] w-[min(90vw,255px)]"
                 titleClassName="absolute bottom-[10px] left-0 right-0 text-[15px] tracking-[0.26em] text-white/80 [font-variant:small-caps]"
                 onSelect={() => setHeadlineText('Premium Online Coaching 12 Weeks')}
                 href="https://coach.everfit.io/package/MD799171"
@@ -228,7 +228,7 @@ export default function Home() {
               <OptionCard
                 title="Male"
                 image="/mockup/male.png"
-                sizeClassName="h-[176px] w-[255px]"
+                sizeClassName="h-[176px] w-[min(90vw,255px)]"
                 titleClassName="absolute bottom-[22px] left-0 right-0 text-base uppercase tracking-[0.3em] text-white/70"
                 href={
                   plan === 'starter4'
@@ -239,7 +239,7 @@ export default function Home() {
               <OptionCard
                 title="Female"
                 image="/mockup/female.png"
-                sizeClassName="h-[176px] w-[255px]"
+                sizeClassName="h-[176px] w-[min(90vw,255px)]"
                 titleClassName="absolute bottom-[22px] left-0 right-0 text-base uppercase tracking-[0.3em] text-white/70"
                 href={
                   plan === 'starter4'
@@ -281,7 +281,7 @@ export default function Home() {
       <section
         id="about"
         ref={aboutRef}
-        className="relative z-10 mx-auto flex min-h-screen snap-start items-center px-6 scroll-mt-24"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center px-6 scroll-mt-24 md:min-h-screen"
       >
         <div className="mx-auto -mt-14 w-full max-w-5xl">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
@@ -311,7 +311,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <div className="h-[28rem] w-[28rem] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+              <div className="h-[min(90vw,28rem)] w-[min(90vw,28rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-[28rem] md:w-[28rem]">
                 <Image
                   src="/mockup/stefbio.png"
                   alt="Stefan bio portrait"
@@ -328,14 +328,14 @@ export default function Home() {
       <section
         id="contact"
         ref={contactRef}
-        className="relative z-10 mx-auto flex min-h-screen snap-start items-center px-6 scroll-mt-24"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center px-6 scroll-mt-24 md:min-h-screen"
       >
         <div className="mx-auto -mt-14 w-full max-w-4xl text-center">
           <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">Contact</h2>
           <div className="mt-10 grid justify-items-center gap-6 text-left">
             <a
               href="mailto:Candeiasstef@gmail.com"
-              className="flex w-full max-w-[18.5rem] items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
+              className="flex w-full max-w-sm items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
             >
               <div className="flex h-10 w-10 items-center justify-center">
                 <Image
@@ -346,11 +346,11 @@ export default function Home() {
                   className="h-[22px] w-[22px]"
                 />
               </div>
-              <span className="text-sm tracking-[0.12em]">Candeiasstef@gmail.com</span>
+              <span className="break-all text-xs tracking-[0.12em] sm:text-sm">Candeiasstef@gmail.com</span>
             </a>
             <a
               href="https://wa.me/31655577683"
-              className="flex w-full max-w-[18.5rem] items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
+              className="flex w-full max-w-sm items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
             >
               <div className="flex h-10 w-10 items-center justify-center">
                 <Image
@@ -361,13 +361,13 @@ export default function Home() {
                   className="h-9 w-9"
                 />
               </div>
-              <span className="text-sm tracking-[0.12em]">0655577683</span>
+              <span className="text-xs tracking-[0.12em] sm:text-sm">0655577683</span>
             </a>
             <a
               href="https://www.instagram.com/candeiascoaching"
               target="_blank"
               rel="noreferrer"
-              className="flex w-full max-w-[18.5rem] items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
+              className="flex w-full max-w-sm items-center gap-4 rounded-2xl border border-white/10 bg-black/15 px-5 py-4 text-white/80 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:backdrop-blur-sm hover:text-white"
             >
               <div className="flex h-10 w-10 items-center justify-center">
                 <Image
@@ -378,7 +378,7 @@ export default function Home() {
                   className="h-10 w-10"
                 />
               </div>
-              <span className="text-sm tracking-[0.12em]">candeiascoaching</span>
+              <span className="text-xs tracking-[0.12em] sm:text-sm">candeiascoaching</span>
             </a>
           </div>
         </div>
