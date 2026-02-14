@@ -110,7 +110,7 @@ export default function Home() {
       className="relative min-h-screen min-h-[100svh] overflow-y-auto snap-y md:snap-mandatory text-white"
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
-        backgroundSize: 'cover',
+        backgroundSize: 'auto',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
       }}
