@@ -107,10 +107,10 @@ export default function Home() {
   return (
     <main
       ref={mainRef}
-      className="relative min-h-screen min-h-[100svh] overflow-y-auto snap-y md:snap-mandatory text-white"
+      className="relative h-[100svh] overflow-y-auto snap-y md:h-screen md:snap-mandatory text-white"
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
-        backgroundSize: 'auto',
+        backgroundSize: '2000px 2000px',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
       }}
