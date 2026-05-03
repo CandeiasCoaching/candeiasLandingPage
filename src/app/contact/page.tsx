@@ -1,10 +1,18 @@
+"use client";
+
+import { useLanguage } from "@/components/language-provider";
+import { siteCopy } from "@/components/site-copy";
+
 export default function ContactPage() {
+  const { locale } = useLanguage();
+  const copy = siteCopy[locale].pages.contact;
+
   return (
     <main className="min-h-screen bg-[#0a0a0a] px-6 pt-4 pb-20 text-white">
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-semibold">Contact</h1>
+        <h1 className="text-3xl font-semibold">{copy.title}</h1>
         <p className="mt-4 text-white/70">
-          This is a placeholder for the Contact page.
+          {copy.description}
         </p>
       </div>
     </main>
