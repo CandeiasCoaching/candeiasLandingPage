@@ -38,8 +38,8 @@ assert.match(page, /←\{'\s'\}\s*\{copy\.home\.planDetails\.back\}/, 'Details p
 assert.doesNotMatch(copy, /Back to Starter & Standard|Terug naar Starter & Standard/, 'Back label should be concise');
 assert.doesNotMatch(page, /copy\.home\.firstBlock\.description/, 'First Block description text should not render');
 assert.doesNotMatch(copy, /Review the first block directly below\.|Bekijk het eerste blok hieronder\./, 'First Block review prompt should be removed');
-assert.ok(existsSync('public/res/the_first_block_2.pdf'), 'missing first block PDF');
-assert.match(page, /src="\/res\/the_first_block_2\.pdf(?:#[^"]*)?"/, 'missing first block PDF viewer source');
+assert.ok(existsSync('public/res/the_first_block.pdf'), 'missing first block PDF');
+assert.match(page, /src="\/res\/the_first_block\.pdf(?:#[^"]*)?"/, 'missing first block PDF viewer source');
 assert.match(page, /title=\{copy\.home\.firstBlock\.pdfTitle\}/, 'missing accessible PDF viewer title');
 assert.doesNotMatch(page, /<section\s+id="contact"/, 'Contact should not be a snap section');
 assert.match(page, /contactExpanded/, 'Missing collapsible contact footer state');
