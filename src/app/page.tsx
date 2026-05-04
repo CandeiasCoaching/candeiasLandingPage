@@ -310,12 +310,12 @@ export default function Home() {
         ref={homeRef}
         className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 text-center scroll-mt-32 md:min-h-screen md:pt-40"
       >
-        <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+        <div className="relative w-[calc(100vw-22px)] -translate-x-1/2 border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ left: 'calc(50% + 11px)', clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
           <div
-            className="relative h-[350px] w-full bg-cover bg-center"
+            className="relative h-[440px] w-full bg-cover bg-center"
             style={{
-              backgroundImage: "url('/mockup/landing_banner.png')",
-              backgroundPosition: 'center 30%',
+              backgroundImage: "url('/mockup/landing_banner_improved.png')",
+              backgroundPosition: 'center 15%',
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
@@ -366,7 +366,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
+            <div className="flex h-[320px] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
@@ -387,17 +387,25 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="mt-4 min-h-[6rem]">
+              <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold text-white">{reviews[activeReview].name}</p>
-                  <p className="text-xs text-white/45">{reviews[activeReview].ago}</p>
                 </div>
                 <p className="mt-2 text-sm tracking-[0.18em] text-[#fbbc04]">{'★'.repeat(reviews[activeReview].rating)}</p>
                 <p className="mt-4 text-base leading-relaxed text-white/80">{reviews[activeReview].text}</p>
               </div>
 
-              <div className="mt-4 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
+              <div className="mt-4 grid grid-cols-[auto_1fr_auto] items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveReview((index) => (index - 1 + reviews.length) % reviews.length)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-[1.1rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white"
+                  aria-label="Previous review"
+                >
+                  <span className="-mt-px">‹</span>
+                </button>
+
+                <div className="flex items-center justify-center gap-2">
                   {reviews.map((review, index) => (
                     <button
                       key={review.name}
@@ -410,24 +418,15 @@ export default function Home() {
                     />
                   ))}
                 </div>
-                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/55">
-                  <button
-                    type="button"
-                    onClick={() => setActiveReview((index) => (index - 1 + reviews.length) % reviews.length)}
-                    className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
-                    aria-label="Previous review"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveReview((index) => (index + 1) % reviews.length)}
-                    className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
-                    aria-label="Next review"
-                  >
-                    ›
-                  </button>
-                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveReview((index) => (index + 1) % reviews.length)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-[1.1rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white"
+                  aria-label="Next review"
+                >
+                  <span className="-mt-px">›</span>
+                </button>
               </div>
             </div>
 
@@ -686,7 +685,7 @@ export default function Home() {
                 height={18}
                 className="h-[18px] w-[18px]"
               />
-              <span>0655577683</span>
+              <span>+31655577683</span>
             </span>
             <span className="flex items-center gap-2">
               <Image
