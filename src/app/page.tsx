@@ -1,6 +1,7 @@
 'use client';
 
 import { siteCopy } from '@/components/site-copy';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLanguage } from '@/components/language-provider';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -27,6 +28,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [plansPanel, setPlansPanel] = useState<'summary' | 'details'>('summary');
   const [contactExpanded, setContactExpanded] = useState(false);
+  const [pdfExpanded, setPdfExpanded] = useState(false);
 
   const mainRef = useRef<HTMLDivElement | null>(null);
   const homeRef = useRef<HTMLElement | null>(null);
@@ -42,46 +44,107 @@ export default function Home() {
       locale === 'nl'
         ? [
             {
-              name: 'Milan V.',
+              name: 'Karolina S',
               rating: 5,
-              ago: '2 weken geleden',
-              text: 'Stef is scherp, duidelijk en motiveert op de juiste manier. Ik ben sterker en fitter dan ooit.',
+              ago: '2 dagen geleden',
+              text: 'Ik raad Candeias Coaching aan aan iedereen die actief en concreet aan de slag wilt. Hij heeft een geweldig trainingsplan voor mij opgesteld, tijdens onze training sessies mijn techniek goed in de gaten gehouden en gecorrigeerd. Mijn dieet is ook aangepast en alles bij elkaar heeft ervoor gezorgd dat mijn doelen zijn bereikt en zelfs overtroffen.',
             },
             {
-              name: 'Sanne K.',
+              name: 'emmely bosman',
               rating: 5,
-              ago: '1 maand geleden',
-              text: 'Eindelijk een schema dat ik echt volhoud. Persoonlijke begeleiding is top en super praktisch.',
+              ago: '4 dagen geleden',
+              text: 'Stef is een geweldige personal trainer die mij enorm heeft geholpen, zowel fysiek als mentaal. Dankzij zijn begeleiding heb ik niet alleen gewerkt aan mijn conditie en doelen, maar ook veel meer zelfvertrouwen opgebouwd. Ook maakt hij duidelijke en haalbare schema\'s op maat. Stef motiveert op een fijne manier, luistert goed en past trainingen aan op wat jij nodig hebt. Hierdoor voel ik me sterker, fitter en zekerder dan voorheen. Zeker een aanrader voor iedereen die serieus aan zichzelf wil werken!',
             },
             {
-              name: 'Ruben D.',
+              name: 'Verona Nimani',
               rating: 5,
-              ago: '3 maanden geleden',
-              text: 'Veel resultaat zonder onnodige onzin. Voeding en training sluiten perfect op elkaar aan.',
+              ago: '2 dagen geleden',
+              text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
+            },
+            {
+              name: 'George Steven',
+              rating: 5,
+              ago: '3 dagen geleden',
+              text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
+            },
+            {
+              name: 'Egy Dhio',
+              rating: 5,
+              ago: '3 dagen geleden',
+              text: 'Great coach, gives great advice and clear instructions.',
+            },
+            {
+              name: 'samuelhuusko',
+              rating: 5,
+              ago: '3 dagen geleden',
+              text: 'His approach to coaching is easy to understand and very thorough.',
             },
           ]
         : [
             {
-              name: 'Milan V.',
+              name: 'Karolina S',
               rating: 5,
-              ago: '2 weeks ago',
-              text: 'Stef is clear, focused, and pushes you in the right way. I am stronger and fitter than ever.',
+              ago: '2 days ago',
+              text: 'I highly recommend Candeias Coaching to anyone who wants practical, concrete progress. He created a great training plan for me, closely watched and corrected my technique during sessions, and adjusted my diet. Together, this helped me reach and even exceed my goals.',
             },
             {
-              name: 'Sanne K.',
+              name: 'emmely bosman',
               rating: 5,
-              ago: '1 month ago',
-              text: 'Finally a plan I can stick to. The personal guidance is excellent and very practical.',
+              ago: '4 days ago',
+              text: 'Stef is an excellent personal trainer who has helped me enormously, both physically and mentally. Thanks to his guidance, I improved my fitness and confidence with clear, realistic programs. He motivates in a supportive way, listens well, and adapts training to what you need.',
             },
             {
-              name: 'Ruben D.',
+              name: 'Verona Nimani',
               rating: 5,
-              ago: '3 months ago',
-              text: 'Great results without the nonsense. Nutrition and training fit together perfectly.',
+              ago: '2 days ago',
+              text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
+            },
+            {
+              name: 'George Steven',
+              rating: 5,
+              ago: '3 days ago',
+              text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
+            },
+            {
+              name: 'Egy Dhio',
+              rating: 5,
+              ago: '3 days ago',
+              text: 'Great coach, gives great advice and clear instructions.',
+            },
+            {
+              name: 'samuelhuusko',
+              rating: 5,
+              ago: '3 days ago',
+              text: 'His approach to coaching is easy to understand and very thorough.',
             },
           ],
     [locale]
   );
+
+  const heroBanner = useMemo(
+    () =>
+      locale === 'nl'
+        ? {
+            eyebrow: 'Welkom bij Candeias Coaching',
+            title: 'Energieker leven begint hier.',
+            description:
+              'Werk aan een fitte, gezonde en haalbare versie van jezelf met persoonlijke begeleiding en een duidelijk plan.',
+            contactCta: 'Plan een gratis intake',
+            plansCta: 'Bekijk ons aanbod',
+          }
+        : {
+            eyebrow: 'Welcome to Candeias Coaching',
+            title: 'Stop guessing. Start progressing.',
+            description:
+              'Candeias Coaching makes fitness achievable for anyone.',
+            contactCta: 'Book a free intake',
+            plansCta: 'View our plans',
+          },
+    [locale]
+  );
+
+  const previousReview = reviews[(activeReview - 1 + reviews.length) % reviews.length];
+  const nextReview = reviews[(activeReview + 1) % reviews.length];
 
   const additionalPlans: PlanDetailCard[] = [
     copy.home.planDetails.advanced,
@@ -110,6 +173,16 @@ export default function Home() {
 
     sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  useEffect(() => {
+    if (!mainRef.current) {
+      return;
+    }
+
+    // Prevent browser scroll-restoration from reopening the page at a previous section.
+    mainRef.current.scrollTo({ top: 0, behavior: 'auto' });
+    setActiveSection('home');
+  }, []);
 
   useEffect(() => {
     const sectionRef = {
@@ -226,6 +299,7 @@ export default function Home() {
               >
                 {copy.nav.about}
               </button>
+              <LanguageSwitcher className="ml-1" />
             </div>
           </div>
         </nav>
@@ -236,81 +310,136 @@ export default function Home() {
         ref={homeRef}
         className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 text-center scroll-mt-32 md:min-h-screen md:pt-40"
       >
-        <div className="max-w-3xl">
-          <p className="text-[10px] uppercase tracking-[0.46em] text-white/40 md:text-xs">
-            Online Coaching
-          </p>
-        </div>
-        <h1 className="mt-6 max-w-4xl text-[15px] font-semibold uppercase tracking-[0.28em] text-white/70 sm:text-[19px] sm:tracking-[0.32em]">
-          {copy.home.heroTitle}
-        </h1>
-        <div className="relative z-10 mx-auto mt-10 w-full max-w-3xl px-6 pb-20">
-          <p className="text-center text-[10px] uppercase tracking-[0.36em] text-white/50 md:text-xs">
-            {locale === 'nl' ? 'Google Reviews' : 'Google Reviews'}
-          </p>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:p-8">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
-                  G
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-white">Candeias Coaching</p>
-                  <p className="text-xs tracking-[0.1em] text-white/55">Google Business Profile</p>
+        <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+          <div
+            className="relative h-[350px] w-full bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/mockup/Screenshot_20260328_172938_Gallery.jpg')",
+              backgroundPosition: 'center 20%',
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
+            <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
+              <div className="max-w-2xl text-left">
+                <h1 className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl">
+                  {locale === 'en' ? (
+                    <>Stop guessing.<br />Start progressing.</>
+                  ) : heroBanner.title}
+                </h1>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/88 md:text-[1.1rem]">
+                  {heroBanner.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setContactExpanded(true)}
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/35 px-5 py-3 text-base font-semibold text-white transition hover:bg-black/50"
+                  >
+                    <span aria-hidden="true">◌</span>
+                    <span>{heroBanner.contactCta}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('plans')}
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/35 px-5 py-3 text-base font-semibold text-white transition hover:bg-black/50"
+                  >
+                    <span aria-hidden="true">▢</span>
+                    <span>{heroBanner.plansCta}</span>
+                  </button>
                 </div>
               </div>
-              <a
-                href="https://www.google.com/search?q=candeias+coaching"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[10px] uppercase tracking-[0.22em] text-white/60 transition hover:text-white"
-              >
-                {locale === 'nl' ? 'Bekijk alle' : 'View all'}
-              </a>
             </div>
-
-            <div className="mt-6 min-h-[10rem]">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-white">{reviews[activeReview].name}</p>
-                <p className="text-xs text-white/45">{reviews[activeReview].ago}</p>
+          </div>
+        </div>
+        <div className="relative z-10 mx-auto mt-16 w-full max-w-6xl px-6 pb-20 md:mt-20">
+          <p className="text-center text-[10px] uppercase tracking-[0.36em] text-white/50 md:text-xs">
+            {locale === 'nl' ? 'Klantgetuigenissen' : 'Client Testimonials'}
+          </p>
+          <div className="mt-5 flex items-center justify-center gap-3 md:gap-4">
+            <aside className="hidden h-[180px] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+              <div className="mt-3">
+                <p className="text-sm font-semibold text-white/85">{previousReview.name}</p>
+                <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(previousReview.rating)}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">
+                  {previousReview.text.slice(0, 80)}...
+                </p>
               </div>
-              <p className="mt-2 text-sm tracking-[0.18em] text-[#fbbc04]">{'★'.repeat(reviews[activeReview].rating)}</p>
-              <p className="mt-4 text-base leading-relaxed text-white/80">{reviews[activeReview].text}</p>
-            </div>
+            </aside>
 
-            <div className="mt-6 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2">
-                {reviews.map((review, index) => (
+            <div className="h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
+                    G
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Candeias Coaching</p>
+                    <p className="text-xs tracking-[0.1em] text-white/55">Google Business Profile</p>
+                  </div>
+                </div>
+                <a
+                  href="https://www.google.com/search?q=candeias+coaching"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[10px] uppercase tracking-[0.22em] text-white/60 transition hover:text-white"
+                >
+                  {locale === 'nl' ? 'Bekijk alle' : 'View all'}
+                </a>
+              </div>
+
+              <div className="mt-4 min-h-[6rem]">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold text-white">{reviews[activeReview].name}</p>
+                  <p className="text-xs text-white/45">{reviews[activeReview].ago}</p>
+                </div>
+                <p className="mt-2 text-sm tracking-[0.18em] text-[#fbbc04]">{'★'.repeat(reviews[activeReview].rating)}</p>
+                <p className="mt-4 text-base leading-relaxed text-white/80">{reviews[activeReview].text}</p>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2">
+                  {reviews.map((review, index) => (
+                    <button
+                      key={review.name}
+                      type="button"
+                      aria-label={`Show review ${index + 1}`}
+                      onClick={() => setActiveReview(index)}
+                      className={`h-1.5 rounded-full transition ${
+                        index === activeReview ? 'w-8 bg-white' : 'w-4 bg-white/25 hover:bg-white/55'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/55">
                   <button
-                    key={review.name}
                     type="button"
-                    aria-label={`Show review ${index + 1}`}
-                    onClick={() => setActiveReview(index)}
-                    className={`h-1.5 rounded-full transition ${
-                      index === activeReview ? 'w-8 bg-white' : 'w-4 bg-white/25 hover:bg-white/55'
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/55">
-                <button
-                  type="button"
-                  onClick={() => setActiveReview((index) => (index - 1 + reviews.length) % reviews.length)}
-                  className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
-                  aria-label="Previous review"
-                >
-                  ‹
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveReview((index) => (index + 1) % reviews.length)}
-                  className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
-                  aria-label="Next review"
-                >
-                  ›
-                </button>
+                    onClick={() => setActiveReview((index) => (index - 1 + reviews.length) % reviews.length)}
+                    className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
+                    aria-label="Previous review"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveReview((index) => (index + 1) % reviews.length)}
+                    className="h-8 w-8 border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white"
+                    aria-label="Next review"
+                  >
+                    ›
+                  </button>
+                </div>
               </div>
             </div>
+
+            <aside className="hidden h-[180px] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+              <div className="mt-3">
+                <p className="text-sm font-semibold text-white/85">{nextReview.name}</p>
+                <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(nextReview.rating)}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">
+                  {nextReview.text.slice(0, 80)}...
+                </p>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -418,18 +547,65 @@ export default function Home() {
       <section
         id="first-block"
         ref={firstBlockRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center px-6 py-28 scroll-mt-24 md:min-h-screen"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col justify-start px-6 pt-32 scroll-mt-24 md:min-h-screen md:pt-36"
       >
-        <div className="mx-auto w-full max-w-6xl text-center">
-          <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">
-            {copy.home.firstBlock.title}
-          </h2>
-          <div className="mt-8 overflow-hidden border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm">
-            <iframe
-              src="/res/the_first_block_2.pdf"
-              title={copy.home.firstBlock.pdfTitle}
-              className="h-[70svh] min-h-[32rem] w-full bg-white"
-            />
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="mb-10 text-left">
+            <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">
+              {copy.home.firstBlock.title}
+            </h2>
+            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/75 md:text-xl">
+              Most beginner guides you find online are generic programs that are easy to follow but don&apos;t teach you anything.
+            </p>
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-white/75 md:text-xl">
+              This guide will help you understand the basics of training and dieting rather than just telling you what to do.
+            </p>
+          </div>
+          <div className="mt-32 overflow-hidden rounded-2xl border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm">
+            <div
+              className="overflow-hidden transition-[height] duration-500 ease-in-out"
+              style={{ height: pdfExpanded ? '70svh' : '0px' }}
+            >
+              <iframe
+                src="/res/the_first_block_2.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                title={copy.home.firstBlock.pdfTitle}
+                className="w-full bg-white"
+                style={{ height: 'calc(100% + 40px)', marginTop: '-40px' }}
+              />
+            </div>
+            <div className="flex items-center justify-between gap-4 border-t border-white/10 px-6 py-5">
+              <button
+                type="button"
+                onClick={() => setPdfExpanded((v) => !v)}
+                className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/70 transition hover:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${pdfExpanded ? 'rotate-180' : ''}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                {pdfExpanded
+                  ? (locale === 'nl' ? 'PDF verbergen' : 'Hide PDF')
+                  : (locale === 'nl' ? 'PDF bekijken' : 'View PDF')}
+              </button>
+              <div className="flex items-center gap-3 text-sm uppercase tracking-[0.2em] text-white/70">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                {locale === 'nl' ? 'Downloaden' : 'Download'}
+                <a href="/res/the_first_block_2.pdf" download className="transition hover:text-white">
+                  PDF
+                </a>
+                <span className="text-white/30">|</span>
+                <a href="/res/First_4_Weeks_Tracker.xlsx" download className="transition hover:text-white">
+                  Tracker
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

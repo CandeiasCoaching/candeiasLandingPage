@@ -2,10 +2,29 @@
 
 import { useLanguage, type Locale } from "./language-provider";
 
-const localeLabels: Record<Locale, string> = {
-  en: "EN",
-  nl: "NL",
-};
+function FlagIcon({ locale }: { locale: Locale }) {
+  if (locale === "en") {
+    return (
+      <svg viewBox="0 0 24 16" className="h-3.5 w-5" aria-hidden="true">
+        <rect width="24" height="16" fill="#1f3f95" />
+        <path d="M0 0 L24 16 M24 0 L0 16" stroke="#fff" strokeWidth="4" />
+        <path d="M0 0 L24 16 M24 0 L0 16" stroke="#c8102e" strokeWidth="2" />
+        <rect x="10" width="4" height="16" fill="#fff" />
+        <rect y="6" width="24" height="4" fill="#fff" />
+        <rect x="11" width="2" height="16" fill="#c8102e" />
+        <rect y="7" width="24" height="2" fill="#c8102e" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 16" className="h-3.5 w-5" aria-hidden="true">
+      <rect width="24" height="16" fill="#ffffff" />
+      <rect width="24" height="5.33" fill="#ae1c28" />
+      <rect y="10.67" width="24" height="5.33" fill="#21468b" />
+    </svg>
+  );
+}
 
 const switcherCopy = {
   en: {
@@ -24,12 +43,18 @@ const switcherCopy = {
   },
 } satisfies Record<Locale, { changeLanguage: string; localeNames: Record<Locale, string> }>;
 
-export function LanguageSwitcher() {
+type LanguageSwitcherProps = {
+  className?: string;
+};
+
+export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const { locale, setLocale } = useLanguage();
   const copy = switcherCopy[locale];
 
   return (
-    <div className="fixed bottom-20 right-4 z-30 rounded-full border border-white/10 bg-black/65 p-1 text-[11px] uppercase tracking-[0.24em] text-white/70 shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur md:bottom-20 md:right-6">
+    <div
+      className={`inline-flex rounded-full border border-white/10 bg-black/65 p-1 text-white/70 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur ${className ?? ""}`}
+    >
       <div className="flex items-center gap-1">
         {(["en", "nl"] as const).map((item) => {
           const isActive = item === locale;
@@ -40,12 +65,14 @@ export function LanguageSwitcher() {
               type="button"
               aria-pressed={isActive}
               aria-label={`${copy.changeLanguage}: ${copy.localeNames[item]}`}
-              className={`rounded-full px-3 py-2 transition ${
-                isActive ? "bg-white text-black" : "text-white/70 hover:text-white"
+              className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition ${
+                isActive
+                  ? "border border-white/60 bg-white/15"
+                  : "border border-transparent hover:border-white/35"
               }`}
               onClick={() => setLocale(item)}
             >
-              {localeLabels[item]}
+              <FlagIcon locale={item} />
             </button>
           );
         })}

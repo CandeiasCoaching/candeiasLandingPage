@@ -39,7 +39,7 @@ assert.doesNotMatch(copy, /Back to Starter & Standard|Terug naar Starter & Stand
 assert.doesNotMatch(page, /copy\.home\.firstBlock\.description/, 'First Block description text should not render');
 assert.doesNotMatch(copy, /Review the first block directly below\.|Bekijk het eerste blok hieronder\./, 'First Block review prompt should be removed');
 assert.ok(existsSync('public/res/the_first_block_2.pdf'), 'missing first block PDF');
-assert.match(page, /src="\/res\/the_first_block_2\.pdf"/, 'missing first block PDF viewer source');
+assert.match(page, /src="\/res\/the_first_block_2\.pdf(?:#[^"]*)?"/, 'missing first block PDF viewer source');
 assert.match(page, /title=\{copy\.home\.firstBlock\.pdfTitle\}/, 'missing accessible PDF viewer title');
 assert.doesNotMatch(page, /<section\s+id="contact"/, 'Contact should not be a snap section');
 assert.match(page, /contactExpanded/, 'Missing collapsible contact footer state');
@@ -48,13 +48,16 @@ assert.doesNotMatch(page, /fixed inset-x-3 bottom-3/, 'Contact footer should not
 assert.match(page, /md:flex[^"]*hidden|hidden[^"]*md:flex/, 'Collapsed desktop footer should show horizontal contact info');
 assert.match(page, /compact desktop contact info/, 'Collapsed desktop footer should include compact platform icons');
 assert.match(page, /max-w-3xl/, 'Expanded contact content should be centered with a constrained width');
-assert.match(page, /\{contactExpanded \? '⌄' : '⌃'\}/, 'Contact footer should use up/down chevrons');
+assert.match(page, /contactExpanded \? '' : 'rotate-180'/, 'Contact footer chevron should point up when collapsed and down when expanded');
 assert.match(page, /expanded contact brand column/, 'Expanded footer should include a brand/social column');
 assert.match(page, /expanded contact links column/, 'Expanded footer should include a links column');
 assert.match(page, /expanded contact details column/, 'Expanded footer should include a contact details column');
 assert.match(page, /md:grid-cols-\[1fr_0\.75fr_1fr\]/, 'Expanded footer should use a reference-inspired three-column desktop layout');
-assert.match(page, /md:hidden/, 'Collapsed mobile footer should hide detailed contact info');
+assert.match(page, /contactExpanded \? 'grid-rows-\[1fr\]' : 'grid-rows-\[0fr\]'/, 'Collapsed footer should hide detailed contact info');
 assert.match(page, /aria-expanded=\{contactExpanded\}/, 'Contact footer toggle should expose expanded state');
 
 const languageSwitcher = readFileSync('src/components/language-switcher.tsx', 'utf8');
-assert.match(languageSwitcher, /bottom-20/, 'Language picker should be raised above the contact bar');
+const layout = readFileSync('src/app/layout.tsx', 'utf8');
+assert.match(page, /<LanguageSwitcher className="ml-1" \/>/, 'Language picker should render in the header');
+assert.doesNotMatch(layout, /<LanguageSwitcher/, 'Language picker should not render globally over the footer');
+assert.match(languageSwitcher, /FlagIcon/, 'Language picker should use flag controls');
