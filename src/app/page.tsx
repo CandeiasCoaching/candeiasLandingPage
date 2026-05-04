@@ -314,8 +314,8 @@ export default function Home() {
           <div
             className="relative h-[350px] w-full bg-cover bg-center"
             style={{
-              backgroundImage: "url('/mockup/Screenshot_20260328_172938_Gallery.jpg')",
-              backgroundPosition: 'center 20%',
+              backgroundImage: "url('/mockup/landing_banner.png')",
+              backgroundPosition: 'center 30%',
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
