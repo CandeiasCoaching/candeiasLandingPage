@@ -308,7 +308,7 @@ export default function Home() {
       <section
         id="home"
         ref={homeRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 text-center scroll-mt-32 md:min-h-screen md:pt-40"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 pb-14 text-center scroll-mt-32 md:min-h-screen md:pt-40"
       >
         <div className="relative w-[calc(100vw-22px)] -translate-x-1/2 border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ left: 'calc(50% + 11px)', clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
           <div
@@ -351,12 +351,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative z-10 mx-auto mt-16 w-full max-w-6xl px-6 pb-20 md:mt-20">
+        <div className="relative z-10 mx-auto mt-16 w-full max-w-6xl px-6 pb-2 md:mt-20">
           <p className="text-center text-[10px] uppercase tracking-[0.36em] text-white/50 md:text-xs">
             {locale === 'nl' ? 'Klantgetuigenissen' : 'Client Testimonials'}
           </p>
           <div className="mt-5 flex items-center justify-center gap-3 md:gap-4">
-            <aside className="hidden h-[180px] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+            <aside className="hidden h-[clamp(150px,calc(100svh-640px),180px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{previousReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(previousReview.rating)}</p>
@@ -366,7 +366,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="flex h-[320px] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
+            <div className="flex h-[clamp(200px,calc(100svh-640px),320px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
@@ -430,7 +430,7 @@ export default function Home() {
               </div>
             </div>
 
-            <aside className="hidden h-[180px] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+            <aside className="hidden h-[clamp(150px,calc(100svh-640px),180px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{nextReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(nextReview.rating)}</p>
@@ -546,7 +546,7 @@ export default function Home() {
       <section
         id="first-block"
         ref={firstBlockRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col justify-start px-6 pt-32 scroll-mt-24 md:min-h-screen md:pt-36"
+        className={`relative z-10 mx-auto flex flex-col justify-start px-6 pt-32 scroll-mt-24 md:pt-36 ${pdfExpanded ? 'min-h-fit' : 'min-h-[100svh] snap-start md:min-h-screen'}`}
       >
         <div className="mx-auto w-full max-w-6xl">
           <div className="mb-10 text-left">
