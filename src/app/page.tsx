@@ -59,25 +59,25 @@ export default function Home() {
               name: 'Verona Nimani',
               rating: 5,
               ago: '2 dagen geleden',
-              text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
+              text: 'Een geweldige coach die echt aandachtig luistert en goed observeert. Met als doel afvallen door samen van regelmatige sportschoolbezoeken een gewoonte te maken.',
             },
             {
               name: 'George Steven',
               rating: 5,
               ago: '3 dagen geleden',
-              text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
+              text: 'Ik heb een paar sessies met Stef gevolgd via online coaching en dat heeft een grote impact gehad op mijn training en voeding. Wat opvalt is hoe goed hij concepten uitlegt op een manier die ik, of elke andere beginner, kan begrijpen. Ik ben ook 5 kg afgevallen sinds ik zijn adviezen opvolg. Stef is ook een erg betrokken trainer – ik kan hem niet genoeg bedanken voor zijn aanpak. Ik raad Stef ten zeerste aan aan iedereen die wil beginnen met trainen.',
             },
             {
               name: 'Egy Dhio',
               rating: 5,
               ago: '3 dagen geleden',
-              text: 'Great coach, gives great advice and clear instructions.',
+              text: 'Geweldige coach, geeft goed advies en duidelijke instructies.',
             },
             {
               name: 'samuelhuusko',
               rating: 5,
               ago: '3 dagen geleden',
-              text: 'His approach to coaching is easy to understand and very thorough.',
+              text: 'Zijn coachingaanpak is makkelijk te begrijpen en erg grondig.',
             },
           ]
         : [
@@ -671,9 +671,9 @@ export default function Home() {
               <Image
                 src="/mockup/gmailcontacticon.png"
                 alt=""
-                width={16}
-                height={16}
-                className="h-4 w-4"
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px] shrink-0"
               />
               <span className="truncate">Candeiasstef@gmail.com</span>
             </span>
@@ -683,7 +683,7 @@ export default function Home() {
                 alt=""
                 width={18}
                 height={18}
-                className="h-[18px] w-[18px]"
+                className="h-[18px] w-[18px] shrink-0"
               />
               <span>+31655577683</span>
             </span>
@@ -693,7 +693,7 @@ export default function Home() {
                 alt=""
                 width={18}
                 height={18}
-                className="h-[18px] w-[18px]"
+                className="h-[18px] w-[18px] shrink-0"
               />
               <span>candeiascoaching</span>
             </span>
@@ -822,6 +822,10 @@ export default function Home() {
                     />
                     <span className="text-left">candeiascoaching</span>
                   </a>
+                  <div className="grid grid-cols-[1.75rem_minmax(0,1fr)] items-center gap-3">
+                    <span className="justify-self-center text-[11px] font-semibold text-white/40">KVK</span>
+                    <span className="text-left">97499455</span>
+                  </div>
                 </div>
               </div>
             </div>
