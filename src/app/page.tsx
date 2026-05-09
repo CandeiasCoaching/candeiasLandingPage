@@ -214,7 +214,7 @@ export default function Home() {
   return (
     <main
       ref={mainRef}
-      className="relative h-[100svh] overflow-y-auto snap-y md:h-screen md:snap-mandatory text-white"
+      className="relative h-[100svh] overflow-y-auto snap-y pb-16 text-white md:h-screen md:pb-0 md:snap-mandatory"
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
         backgroundSize: '2000px 2000px',
@@ -308,11 +308,11 @@ export default function Home() {
       <section
         id="home"
         ref={homeRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 pb-14 text-center scroll-mt-32 md:min-h-screen md:pt-40"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 pb-20 text-center scroll-mt-32 md:min-h-screen md:pb-14 md:pt-40"
       >
         <div className="relative w-[calc(100vw-22px)] -translate-x-1/2 border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ left: 'calc(50% + 11px)', clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
           <div
-            className="relative h-[440px] w-full bg-cover bg-center"
+            className="relative h-[320px] w-full bg-cover bg-center sm:h-[380px] md:h-[440px]"
             style={{
               backgroundImage: "url('/mockup/landing_banner_improved.png')",
               backgroundPosition: 'center 15%',
@@ -351,7 +351,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative z-10 mx-auto mt-16 w-full max-w-6xl px-6 pb-2 md:mt-20">
+        <div className="relative z-10 mx-auto mt-14 w-full max-w-6xl px-2 pb-2 sm:mt-16 sm:px-4 md:mt-20 md:px-6">
           <p className="text-center text-[10px] uppercase tracking-[0.36em] text-white/50 md:text-xs">
             {locale === 'nl' ? 'Klantgetuigenissen' : 'Client Testimonials'}
           </p>
@@ -366,7 +366,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="flex h-[clamp(200px,calc(100svh-640px),320px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:w-[500px] md:p-6">
+            <div className="flex h-[clamp(260px,52svh,320px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-4 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-5 md:w-[500px] md:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
@@ -392,7 +392,7 @@ export default function Home() {
                   <p className="text-sm font-semibold text-white">{reviews[activeReview].name}</p>
                 </div>
                 <p className="mt-2 text-sm tracking-[0.18em] text-[#fbbc04]">{'★'.repeat(reviews[activeReview].rating)}</p>
-                <p className="mt-4 text-base leading-relaxed text-white/80">{reviews[activeReview].text}</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/80 md:mt-4 md:text-base">{reviews[activeReview].text}</p>
               </div>
 
               <div className="mt-4 grid grid-cols-[auto_1fr_auto] items-center gap-3">
@@ -446,7 +446,7 @@ export default function Home() {
       <section
         id="plans"
         ref={plansRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center overflow-hidden px-6 py-28 scroll-mt-24 md:min-h-screen"
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center overflow-hidden px-6 py-22 scroll-mt-24 md:min-h-screen md:py-28"
       >
         <div className="mx-auto w-full max-w-6xl overflow-hidden">
           <div
@@ -572,7 +572,7 @@ export default function Home() {
                 style={{ height: 'calc(100% + 40px)', marginTop: '-40px' }}
               />
             </div>
-            <div className="flex items-center justify-between gap-4 border-t border-white/10 px-6 py-5">
+            <div className="flex flex-col items-start gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-5">
               <button
                 type="button"
                 onClick={() => setPdfExpanded((v) => !v)}
@@ -591,7 +591,7 @@ export default function Home() {
                   ? (locale === 'nl' ? 'PDF verbergen' : 'Hide PDF')
                   : (locale === 'nl' ? 'PDF bekijken' : 'View PDF')}
               </button>
-              <div className="flex items-center gap-3 text-sm uppercase tracking-[0.2em] text-white/70">
+              <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/70 sm:gap-3 sm:text-sm sm:tracking-[0.2em]">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -614,7 +614,7 @@ export default function Home() {
         ref={aboutRef}
         className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center px-6 scroll-mt-24 md:min-h-screen"
       >
-        <div className="mx-auto -mt-14 w-full max-w-5xl">
+        <div className="mx-auto -mt-6 w-full max-w-5xl md:-mt-14">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div className="text-left">
               <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">{copy.home.about.title}</h2>
