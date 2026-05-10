@@ -223,10 +223,10 @@ export default function Home() {
       }}
     >
       <header className="relative z-20">
-        <nav className="fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-4 py-4 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur md:px-6 md:py-5">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <nav className="fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-3 py-2.5 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur sm:px-4 sm:py-3 md:px-6 md:py-5">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <button
-              className="group flex items-center justify-center gap-4 self-center text-left md:justify-start"
+              className="group flex items-center justify-center gap-2.5 self-center text-left md:justify-start sm:gap-4"
               onClick={() => {
                 scrollToSection('home');
               }}
@@ -237,18 +237,18 @@ export default function Home() {
                 width={472}
                 height={376}
                 priority
-                className="h-auto w-14 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] md:w-[4.5rem]"
+                className="h-auto w-11 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] sm:w-14 md:w-[4.5rem]"
               />
               <div className="flex flex-col items-start">
-                <span className="font-serif text-xl uppercase tracking-[0.18em] text-white md:text-2xl">
+                <span className="font-serif text-[1rem] uppercase tracking-[0.12em] text-white sm:text-xl sm:tracking-[0.18em] md:text-2xl">
                   Candeias
                 </span>
-                <span className="text-[10px] uppercase tracking-[0.38em] text-white/60 md:text-[11px]">
+                <span className="text-[8px] uppercase tracking-[0.24em] text-white/60 sm:text-[10px] sm:tracking-[0.38em] md:text-[11px]">
                   Coaching
                 </span>
               </div>
             </button>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-[0.22em] md:justify-end md:gap-8 md:text-xs md:tracking-[0.25em]">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.14em] sm:gap-4 sm:text-[11px] sm:tracking-[0.22em] md:justify-end md:gap-8 md:text-xs md:tracking-[0.25em]">
               <button
                 className="transition hover:text-white"
               onClick={() => {
@@ -299,7 +299,7 @@ export default function Home() {
               >
                 {copy.nav.about}
               </button>
-              <LanguageSwitcher className="ml-1" />
+              <LanguageSwitcher className="ml-0.5 scale-90 sm:ml-1 sm:scale-100" />
             </div>
           </div>
         </nav>
@@ -329,11 +329,11 @@ export default function Home() {
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-white/88 md:text-[1.1rem]">
                   {heroBanner.description}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-2 sm:mt-6 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setContactExpanded(true)}
-                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/35 px-5 py-3 text-base font-semibold text-white transition hover:bg-black/50"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-black/35 px-3 py-2 text-xs font-semibold text-white transition hover:bg-black/50 sm:gap-2 sm:px-5 sm:py-3 sm:text-base"
                   >
                     <span aria-hidden="true">◌</span>
                     <span>{heroBanner.contactCta}</span>
@@ -341,7 +341,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => scrollToSection('plans')}
-                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/35 px-5 py-3 text-base font-semibold text-white transition hover:bg-black/50"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-black/35 px-3 py-2 text-xs font-semibold text-white transition hover:bg-black/50 sm:gap-2 sm:px-5 sm:py-3 sm:text-base"
                   >
                     <span aria-hidden="true">▢</span>
                     <span>{heroBanner.plansCta}</span>
@@ -351,12 +351,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative z-10 mx-auto mt-14 w-full max-w-6xl px-2 pb-2 sm:mt-16 sm:px-4 md:mt-20 md:px-6">
-          <p className="text-center text-[10px] uppercase tracking-[0.36em] text-white/50 md:text-xs">
+        <div className="relative z-10 mx-auto mt-9 w-full max-w-6xl px-2 pb-2 sm:mt-11 sm:px-4 md:mt-16 md:px-6">
+          <p className="hidden text-center text-[10px] uppercase tracking-[0.36em] text-white/50 sm:block md:text-xs">
             {locale === 'nl' ? 'Klantgetuigenissen' : 'Client Testimonials'}
           </p>
           <div className="mt-5 flex items-center justify-center gap-3 md:gap-4">
-            <aside className="hidden h-[clamp(150px,calc(100svh-640px),180px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+            <aside className="hidden h-[clamp(140px,calc(100svh-660px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{previousReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(previousReview.rating)}</p>
@@ -366,54 +366,54 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="flex h-[clamp(260px,52svh,320px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-4 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-5 md:w-[500px] md:p-6">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-base font-bold text-black">
+            <div className="flex h-[clamp(150px,28svh,220px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-2.5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:h-[clamp(190px,34svh,260px)] sm:p-4 md:w-[500px] md:h-[clamp(240px,48svh,300px)] md:p-6">
+              <div className="flex items-center justify-between gap-3 sm:gap-4">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-sm font-bold text-black sm:h-8 sm:w-8 sm:text-base">
                     G
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-white">Candeias Coaching</p>
-                    <p className="text-xs tracking-[0.1em] text-white/55">Google Business Profile</p>
+                    <p className="text-xs font-semibold text-white sm:text-sm">Candeias Coaching</p>
+                    <p className="text-[10px] tracking-[0.08em] text-white/55 sm:text-xs sm:tracking-[0.1em]">Google Business Profile</p>
                   </div>
                 </div>
                 <a
                   href="https://www.google.com/search?q=candeias+coaching"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[10px] uppercase tracking-[0.22em] text-white/60 transition hover:text-white"
+                  className="text-[9px] uppercase tracking-[0.18em] text-white/60 transition hover:text-white sm:text-[10px] sm:tracking-[0.22em]"
                 >
                   {locale === 'nl' ? 'Bekijk alle' : 'View all'}
                 </a>
               </div>
 
-              <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
+              <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1 sm:mt-4">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold text-white">{reviews[activeReview].name}</p>
+                  <p className="text-xs font-semibold text-white sm:text-sm">{reviews[activeReview].name}</p>
                 </div>
-                <p className="mt-2 text-sm tracking-[0.18em] text-[#fbbc04]">{'★'.repeat(reviews[activeReview].rating)}</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/80 md:mt-4 md:text-base">{reviews[activeReview].text}</p>
+                <p className="mt-1.5 text-[10px] tracking-[0.14em] text-[#fbbc04] sm:mt-2 sm:text-sm sm:tracking-[0.18em]">{'★'.repeat(reviews[activeReview].rating)}</p>
+                <p className="mt-2 text-[12px] leading-relaxed text-white/80 sm:mt-3 sm:text-sm md:mt-4 md:text-base">{reviews[activeReview].text}</p>
               </div>
 
-              <div className="mt-4 grid grid-cols-[auto_1fr_auto] items-center gap-3">
+              <div className="mt-2.5 grid grid-cols-[auto_1fr_auto] items-center gap-1 sm:mt-3 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => setActiveReview((index) => (index - 1 + reviews.length) % reviews.length)}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-[1.1rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white"
+                  className="inline-flex h-4.5 w-4.5 items-center justify-center rounded-full border border-white/15 text-[0.74rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white sm:h-5 sm:w-5 sm:text-[0.82rem] md:h-8 md:w-8 md:text-[1.1rem]"
                   aria-label="Previous review"
                 >
                   <span className="-mt-px">‹</span>
                 </button>
 
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-0.5 sm:gap-1">
                   {reviews.map((review, index) => (
                     <button
                       key={review.name}
                       type="button"
                       aria-label={`Show review ${index + 1}`}
                       onClick={() => setActiveReview(index)}
-                      className={`h-1.5 rounded-full transition ${
-                        index === activeReview ? 'w-8 bg-white' : 'w-4 bg-white/25 hover:bg-white/55'
+                      className={`h-0.5 rounded-full transition sm:h-1 ${
+                        index === activeReview ? 'w-4 bg-white sm:w-5 md:w-8' : 'w-2 bg-white/25 hover:bg-white/55 sm:w-3.5'
                       }`}
                     />
                   ))}
@@ -422,7 +422,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setActiveReview((index) => (index + 1) % reviews.length)}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-[1.1rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white"
+                  className="inline-flex h-4.5 w-4.5 items-center justify-center rounded-full border border-white/15 text-[0.74rem] leading-none text-white/80 transition hover:border-white/40 hover:text-white sm:h-5 sm:w-5 sm:text-[0.82rem] md:h-8 md:w-8 md:text-[1.1rem]"
                   aria-label="Next review"
                 >
                   <span className="-mt-px">›</span>
@@ -430,7 +430,7 @@ export default function Home() {
               </div>
             </div>
 
-            <aside className="hidden h-[clamp(150px,calc(100svh-640px),180px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+            <aside className="hidden h-[clamp(140px,calc(100svh-660px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{nextReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(nextReview.rating)}</p>

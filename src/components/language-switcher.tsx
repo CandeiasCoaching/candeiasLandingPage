@@ -5,7 +5,7 @@ import { useLanguage, type Locale } from "./language-provider";
 function FlagIcon({ locale }: { locale: Locale }) {
   if (locale === "en") {
     return (
-      <svg viewBox="0 0 24 16" className="h-3.5 w-5" aria-hidden="true">
+      <svg viewBox="0 0 24 16" className="h-3 w-[18px] sm:h-3.5 sm:w-5" aria-hidden="true">
         <rect width="24" height="16" fill="#1f3f95" />
         <path d="M0 0 L24 16 M24 0 L0 16" stroke="#fff" strokeWidth="4" />
         <path d="M0 0 L24 16 M24 0 L0 16" stroke="#c8102e" strokeWidth="2" />
@@ -18,7 +18,7 @@ function FlagIcon({ locale }: { locale: Locale }) {
   }
 
   return (
-    <svg viewBox="0 0 24 16" className="h-3.5 w-5" aria-hidden="true">
+    <svg viewBox="0 0 24 16" className="h-3 w-[18px] sm:h-3.5 sm:w-5" aria-hidden="true">
       <rect width="24" height="16" fill="#ffffff" />
       <rect width="24" height="5.33" fill="#ae1c28" />
       <rect y="10.67" width="24" height="5.33" fill="#21468b" />
@@ -53,7 +53,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
 
   return (
     <div
-      className={`inline-flex rounded-full border border-white/10 bg-black/65 p-1 text-white/70 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur ${className ?? ""}`}
+      className={`inline-flex rounded-full border border-white/10 bg-black/65 p-0.5 text-white/70 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur sm:p-1 ${className ?? ""}`}
     >
       <div className="flex items-center gap-1">
         {(["en", "nl"] as const).map((item) => {
@@ -65,7 +65,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
               type="button"
               aria-pressed={isActive}
               aria-label={`${copy.changeLanguage}: ${copy.localeNames[item]}`}
-              className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition ${
+              className={`flex h-7 w-7 cursor-pointer items-center justify-center rounded-full transition sm:h-8 sm:w-8 ${
                 isActive
                   ? "border border-white/60 bg-white/15"
                   : "border border-transparent hover:border-white/35"
