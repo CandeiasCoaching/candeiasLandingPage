@@ -3,8 +3,29 @@
 import { siteCopy } from '@/components/site-copy';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLanguage } from '@/components/language-provider';
+import { VideoCarousel } from '@/components/video-carousel';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
+
+const VIDEOS_BASE_URL = (process.env.NEXT_PUBLIC_VIDEOS_BASE_URL ?? '/res/videos').replace(/\/$/, '');
+
+const videoUrl = (filename: string) => `${VIDEOS_BASE_URL}/${encodeURIComponent(filename)}`;
+
+const FIRST_BLOCK_VIDEOS = [
+  { src: videoUrl('cable row.mp4'), label: 'Cable row' },
+  { src: videoUrl('chest press machine 9x16.mp4'), label: 'Chest press' },
+  { src: videoUrl('incline chest press machine.mp4'), label: 'Incline chest press' },
+  { src: videoUrl('lat pulldown.mp4'), label: 'Lat pulldown' },
+  { src: videoUrl('lat raise.mp4'), label: 'Lat raise' },
+  { src: videoUrl('dumbbell curl.mp4'), label: 'Dumbbell curl' },
+  { src: videoUrl('preacher curl.mp4'), label: 'Preacher curl' },
+  { src: videoUrl('pushdown.mp4'), label: 'Pushdown' },
+  { src: videoUrl('hacksquat.mp4'), label: 'Hack squat' },
+  { src: videoUrl('Leg press.mp4'), label: 'Leg press' },
+  { src: videoUrl('leg extension.mp4'), label: 'Leg extension' },
+  { src: videoUrl('leg curl.mp4'), label: 'Leg curl' },
+  { src: videoUrl('calf raise.mp4'), label: 'Calf raise' },
+];
 
 type PlanDetailCard = {
   title: string;
@@ -27,8 +48,13 @@ export default function Home() {
   const [activeReview, setActiveReview] = useState(0);
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [plansPanel, setPlansPanel] = useState<'summary' | 'details'>('summary');
+  const [aboutPanel, setAboutPanel] = useState<'vision' | 'bio'>('vision');
   const [contactExpanded, setContactExpanded] = useState(false);
   const [pdfExpanded, setPdfExpanded] = useState(false);
+  const [parallaxY, setParallaxY] = useState(0);
+  const [visionParallaxY, setVisionParallaxY] = useState(0);
+  const [homeBannerW, setHomeBannerW] = useState(0);
+  const [visionBannerW, setVisionBannerW] = useState(0);
 
   const mainRef = useRef<HTMLDivElement | null>(null);
   const homeRef = useRef<HTMLElement | null>(null);
@@ -38,11 +64,25 @@ export default function Home() {
   const moreRef = useRef<HTMLButtonElement | null>(null);
   const firstBlockRef = useRef<HTMLElement | null>(null);
   const aboutRef = useRef<HTMLElement | null>(null);
+  const homeBannerRef = useRef<HTMLDivElement | null>(null);
+  const visionBannerRef = useRef<HTMLDivElement | null>(null);
+
+  const rad2deg = (rad: number) => (rad * 180) / Math.PI;
+  const homeTopRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(-80, homeBannerW))}deg)` : 'rotate(-2.7deg)';
+  const homeBotRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(40, homeBannerW))}deg)` : 'rotate(1.35deg)';
+  const visionTopRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(80, visionBannerW))}deg)` : 'rotate(2.7deg)';
+  const visionBotRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(-40, visionBannerW))}deg)` : 'rotate(-1.35deg)';
 
   const reviews = useMemo<ReviewItem[]>(
     () =>
       locale === 'nl'
         ? [
+            {
+              name: 'Lara de Gelder',
+              rating: 5,
+              ago: '1 dag geleden',
+              text: 'Stef is een goede coach. Ik kwam hier na een maand lang erg ziek te zijn geweest om letterlijk en figuurlijk eerst weer op krachten te komen. En daarna te bouwen aan mijn conditie en kracht.\n\nOmdat ik zelf al veel weet van voeding en sport (als yogadocent) pastte hij hier heel goed zijn uitleg en training op aan. Uitleg over verschillende spiergroepen en hoe die benut worden bij de verschillende oefeningen.\n\nOmdat ik nooit in een sportschool ben geweest en er zelfs lichtelijk iets op tegen had, heeft hij in het begin me helemaal meegenomen. Na een paar weken begonnen we wat meer uitdagende oefeningen te doen. Na twee maanden kon ik inzien waarom de sportschool een goede aanvulling is bij de sporten die ik al doe en bouwde ik langzaam mijn kracht op. Na drie maanden kreeg ik er zelfs lol in! Sterkere spieren helpen ook mijn yoga en klimsport vooruit.\n\nStef heeft een goede kennis over spier ontwikkeling, en oefeningen die het best bij je persoonlijke doelen passen. Ook let hij heel goed op techniek, zodat als je \'zelfstanding\' gaat trainen het zeker op de juiste manier aanpakt. Ook is het fijn dat hij erg flexibel is in de dagen waarop je samen traint. Ook komt hij met nieuwe frisse ideeën. Een aanrader voor iedereen die een stap verder wil komen in een fittere leefstijl!',
+            },
             {
               name: 'Karolina S',
               rating: 5,
@@ -81,6 +121,12 @@ export default function Home() {
             },
           ]
         : [
+            {
+              name: 'Lara de Gelder',
+              rating: 5,
+              ago: '1 day ago',
+              text: 'Stef is a great coach. I came to him after a month of being very ill, to first regain my strength — both literally and figuratively — and then build up my conditioning and strength.\n\nBecause I already know a lot about nutrition and sport (as a yoga teacher), he tailored his explanations and training accordingly, covering the different muscle groups and how they\'re used in various exercises.\n\nBecause I had never been to a gym and was even slightly opposed to it, he eased me in completely at the start. After a few weeks we began doing more challenging exercises. After two months I could see why the gym is a great complement to the sports I already do, and I was slowly building strength. After three months I was even enjoying it! Stronger muscles also help my yoga and climbing.\n\nStef has solid knowledge of muscle development and the exercises that best fit your personal goals. He also pays close attention to technique, so when you train on your own you\'ll do it the right way. It\'s also great that he\'s very flexible with training days, and he comes up with fresh new ideas. Recommended for anyone who wants to take a step further toward a fitter lifestyle!',
+            },
             {
               name: 'Karolina S',
               rating: 5,
@@ -160,6 +206,9 @@ export default function Home() {
     if (section === 'plans' || section === 'starter' || section === 'standard') {
       setPlansPanel('summary');
     }
+    if (section === 'about') {
+      setAboutPanel('vision');
+    }
 
     setActiveSection(section);
     const sectionRef = {
@@ -185,6 +234,25 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const observers: ResizeObserver[] = [];
+    if (homeBannerRef.current) {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) setHomeBannerW(entry.contentRect.width);
+      });
+      ro.observe(homeBannerRef.current);
+      observers.push(ro);
+    }
+    if (visionBannerRef.current) {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) setVisionBannerW(entry.contentRect.width);
+      });
+      ro.observe(visionBannerRef.current);
+      observers.push(ro);
+    }
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  useEffect(() => {
     const sectionRef = {
       home: homeRef,
       plans: plansRef,
@@ -204,6 +272,27 @@ export default function Home() {
 
     return () => window.clearInterval(intervalId);
   }, [reviews.length]);
+
+  useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        setParallaxY(el.scrollTop * 0.25);
+        if (aboutRef.current) {
+          setVisionParallaxY((el.scrollTop - aboutRef.current.offsetTop) * 0.25);
+        }
+        frame = 0;
+      });
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   const revealPlanDetails = () => {
     setPlansPanel('details');
@@ -308,25 +397,35 @@ export default function Home() {
       <section
         id="home"
         ref={homeRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start flex-col items-center justify-center px-6 pt-36 pb-20 text-center scroll-mt-32 md:min-h-screen md:pb-14 md:pt-40"
+        className="relative z-10 flex min-h-[100svh] snap-start flex-col items-center justify-center pt-36 pb-20 text-center scroll-mt-32 md:min-h-screen md:pb-14 md:pt-40"
       >
-        <div className="relative w-[calc(100vw-22px)] -translate-x-1/2 border-y border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ left: 'calc(50% + 11px)', clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
+        <div className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
           <div
+            ref={homeBannerRef}
             className="relative h-[320px] w-full bg-cover bg-center sm:h-[380px] md:h-[440px]"
             style={{
               backgroundImage: "url('/mockup/landing_banner_improved.png')",
-              backgroundPosition: 'center 15%',
+              backgroundPosition: `center calc(15% + ${parallaxY}px)`,
+              willChange: 'background-position',
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
+            <div
+              className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-b from-black/55 to-transparent"
+              style={{ top: '80px', transformOrigin: '0 0', transform: homeTopRot }}
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
+              style={{ bottom: '60px', transformOrigin: '0 100%', transform: homeBotRot }}
+            />
             <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
               <div className="max-w-2xl text-left">
-                <h1 className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl">
+                <h1 className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl [text-shadow:_0_2px_14px_rgba(0,0,0,0.9)]">
                   {locale === 'en' ? (
                     <>Stop guessing.<br />Start progressing.</>
                   ) : heroBanner.title}
                 </h1>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/88 md:text-[1.1rem]">
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/88 md:text-[1.1rem] [text-shadow:_0_1px_10px_rgba(0,0,0,0.85)]">
                   {heroBanner.description}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2 sm:mt-6 sm:gap-3">
@@ -378,7 +477,7 @@ export default function Home() {
                   </div>
                 </div>
                 <a
-                  href="https://www.google.com/search?q=candeias+coaching"
+                  href="https://maps.app.goo.gl/16S9CXzmwjeLmgy16"
                   target="_blank"
                   rel="noreferrer"
                   className="text-[9px] uppercase tracking-[0.18em] text-white/60 transition hover:text-white sm:text-[10px] sm:tracking-[0.22em]"
@@ -392,7 +491,7 @@ export default function Home() {
                   <p className="text-xs font-semibold text-white sm:text-sm">{reviews[activeReview].name}</p>
                 </div>
                 <p className="mt-1.5 text-[10px] tracking-[0.14em] text-[#fbbc04] sm:mt-2 sm:text-sm sm:tracking-[0.18em]">{'★'.repeat(reviews[activeReview].rating)}</p>
-                <p className="mt-2 text-[12px] leading-relaxed text-white/80 sm:mt-3 sm:text-sm md:mt-4 md:text-base">{reviews[activeReview].text}</p>
+                <p className="mt-2 whitespace-pre-line text-[12px] leading-relaxed text-white/80 sm:mt-3 sm:text-sm md:mt-4 md:text-base">{reviews[activeReview].text}</p>
               </div>
 
               <div className="mt-2.5 grid grid-cols-[auto_1fr_auto] items-center gap-1 sm:mt-3 sm:gap-2">
@@ -549,16 +648,25 @@ export default function Home() {
         className={`relative z-10 mx-auto flex flex-col justify-start px-6 pt-32 scroll-mt-24 md:pt-36 ${pdfExpanded ? 'min-h-fit' : 'min-h-[100svh] snap-start md:min-h-screen'}`}
       >
         <div className="mx-auto w-full max-w-6xl">
-          <div className="mb-10 text-left">
-            <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">
-              {copy.home.firstBlock.title}
-            </h2>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/75 md:text-xl">
-              Most beginner guides you find online are generic programs that are easy to follow but don&apos;t teach you anything.
-            </p>
-            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-white/75 md:text-xl">
-              This guide will help you understand the basics of training and dieting rather than just telling you what to do.
-            </p>
+          <div className="mb-10 grid items-center gap-10 md:grid-cols-2 md:gap-12">
+            <div className="text-left">
+              <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">
+                {copy.home.firstBlock.title}
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-white/75 md:text-xl">
+                Most beginner guides you find online are generic programs that are easy to follow but don&apos;t teach you anything.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-white/75 md:text-xl">
+                This guide will help you understand the basics of training and dieting rather than just telling you what to do.
+              </p>
+            </div>
+            <div>
+              <VideoCarousel
+                videos={FIRST_BLOCK_VIDEOS}
+                prevLabel={locale === 'nl' ? 'Vorige' : 'Previous'}
+                nextLabel={locale === 'nl' ? 'Volgende' : 'Next'}
+              />
+            </div>
           </div>
           <div className="mt-32 overflow-hidden rounded-2xl border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm">
             <div
@@ -612,27 +720,95 @@ export default function Home() {
       <section
         id="about"
         ref={aboutRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center px-6 scroll-mt-24 md:min-h-screen"
+        className="relative z-10 flex min-h-[100svh] snap-start items-center overflow-hidden scroll-mt-24 md:min-h-screen"
       >
-        <div className="mx-auto -mt-6 w-full max-w-5xl md:-mt-14">
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <div className="text-left">
-              <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">{copy.home.about.title}</h2>
-              <div className="mt-4 space-y-4 text-white/70">
-                {copy.home.about.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+        <div className="w-full overflow-hidden">
+          <div
+            className={`flex w-[200%] transition-transform duration-700 ease-in-out ${
+              aboutPanel === 'bio' ? 'translate-x-[-50%]' : 'translate-x-0'
+            }`}
+          >
+            <div className="w-1/2 shrink-0">
+              <div
+                className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
+                style={{
+                  clipPath: 'polygon(0 0, 100% 80px, 100% calc(100% - 60px), 0 calc(100% - 20px))',
+                }}
+              >
+                <div
+                  ref={visionBannerRef}
+                  className="relative h-[420px] w-full bg-cover bg-center sm:h-[500px] md:h-[580px]"
+                  style={{
+                    backgroundImage: "url('/res/vision.jpg')",
+                    backgroundPosition: `center calc(50% + ${visionParallaxY}px)`,
+                    willChange: 'background-position',
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-b from-black/55 to-transparent"
+                    style={{ top: '0px', transformOrigin: '0 0', transform: visionTopRot }}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
+                    style={{ bottom: '20px', transformOrigin: '0 100%', transform: visionBotRot }}
+                  />
+                  <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
+                    <div className="max-w-2xl text-left">
+                      <h2 className="text-xs uppercase tracking-[0.35em] text-white/85 [text-shadow:_0_1px_10px_rgba(0,0,0,0.85)]">
+                        {copy.home.vision.title}
+                      </h2>
+                      <div className="mt-4 space-y-3 text-sm leading-relaxed text-white/90 md:text-base [text-shadow:_0_1px_10px_rgba(0,0,0,0.85)]">
+                        {copy.home.vision.paragraphs.map((paragraph) => (
+                          <p key={paragraph}>{paragraph}</p>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setAboutPanel('bio')}
+                        className="mt-6 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-black/45 px-5 py-3 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm transition hover:border-white/35 hover:bg-black/65"
+                      >
+                        <span>{copy.home.vision.more.title}</span>
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex justify-center md:justify-end">
-              <div className="h-[min(90vw,28rem)] w-[min(90vw,28rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-[28rem] md:w-[28rem]">
-                <Image
-                  src="/mockup/stefbio.png"
-                  alt={copy.home.about.imageAlt}
-                  width={512}
-                  height={640}
-                  className="h-full w-full object-cover"
-                />
+
+            <div className="w-1/2 shrink-0 px-6">
+              <div className="mx-auto w-full max-w-5xl">
+                <div className="flex items-center justify-start">
+                  <button
+                    type="button"
+                    className="text-[10px] uppercase tracking-[0.22em] text-white/55 transition hover:text-white"
+                    onClick={() => setAboutPanel('vision')}
+                  >
+                    ← {copy.home.about.back}
+                  </button>
+                </div>
+                <div className="mt-6 grid gap-10 md:grid-cols-2 md:items-center">
+                  <div className="text-left">
+                    <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">{copy.home.about.title}</h2>
+                    <div className="mt-4 space-y-4 text-white/70">
+                      {copy.home.about.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex justify-center md:justify-end">
+                    <div className="h-[min(90vw,28rem)] w-[min(90vw,28rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-[28rem] md:w-[28rem]">
+                      <Image
+                        src="/mockup/stefbio.png"
+                        alt={copy.home.about.imageAlt}
+                        width={512}
+                        height={640}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -826,6 +1002,15 @@ export default function Home() {
                     <span className="justify-self-center text-[11px] font-semibold text-white/40">KVK</span>
                     <span className="text-left">97499455</span>
                   </div>
+                  <a
+                    href="https://maps.app.goo.gl/16S9CXzmwjeLmgy16"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="grid grid-cols-[1.75rem_minmax(0,1fr)] items-start gap-3 transition hover:text-white"
+                  >
+                    <span aria-hidden="true" className="justify-self-center text-base leading-none text-white/55">⌖</span>
+                    <span className="text-left leading-snug">Baskensburgplein 2,<br />4383 NE Vlissingen, Netherlands</span>
+                  </a>
                 </div>
               </div>
             </div>

@@ -64,10 +64,19 @@ type SiteCopy = {
       title: string;
       pdfTitle: string;
     };
+    vision: {
+      title: string;
+      paragraphs: string[];
+      more: {
+        title: string;
+        action: string;
+      };
+    };
     about: {
       title: string;
       paragraphs: string[];
       imageAlt: string;
+      back: string;
     };
     contact: {
       title: string;
@@ -245,6 +254,20 @@ export const siteCopy = {
         title: "The First Block",
         pdfTitle: "The First Block PDF",
       },
+      vision: {
+        title: "Our Vision",
+        paragraphs: [
+          "The fitness industry has a problem. It runs on hype, sells transformation as a quick fix, and treats every client like they're the same person. Most beginners get handed a generic program, told to push harder, and left to figure out the rest on their own. When it doesn't work, they blame themselves.",
+          "Candeias Coaching exists to do the opposite.",
+          "We coach the person, not the template. That means reading who you are first, your experience, your schedule, your body, your goals. And then building a plan around it. It means staying current with the actual research instead of chasing trends. And it means adjusting as you go, because no plan survives contact with real life unchanged.",
+          "The goal isn't a transformation photo. It's a stronger, healthier version of you that knows how to be confident and own it and a relationship with training and food you'll never have to start over from again.",
+          "That's the standard. Every client, every time.",
+        ],
+        more: {
+          title: "Meet Stef",
+          action: "",
+        },
+      },
       about: {
         title: "About",
         paragraphs: [
@@ -255,6 +278,7 @@ export const siteCopy = {
           "Whether you're just starting out or looking to break through a plateau, I'm here to guide you with a methodical, no-nonsense approach that gets results.",
         ],
         imageAlt: "Stefan bio portrait",
+        back: "Back",
       },
       contact: {
         title: "Contact",
@@ -430,6 +454,20 @@ export const siteCopy = {
         title: "The First Block",
         pdfTitle: "The First Block PDF",
       },
+      vision: {
+        title: "Onze Visie",
+        paragraphs: [
+          "De fitnessindustrie heeft een probleem. Het draait op hype, verkoopt transformatie als een quick fix en behandelt elke client alsof ze dezelfde persoon zijn. De meeste beginners krijgen een generiek programma in de hand gedrukt, krijgen te horen dat ze harder moeten pushen, en moeten de rest zelf uitzoeken. Als het niet werkt, geven ze zichzelf de schuld.",
+          "Candeias Coaching bestaat om het tegenovergestelde te doen.",
+          "Wij coachen de persoon, niet het sjabloon. Dat betekent dat we eerst lezen wie jij bent, je ervaring, je schema, je lichaam, je doelen. En daarna een plan eromheen bouwen. Het betekent up-to-date blijven met het echte onderzoek in plaats van trends achterna te lopen. En het betekent onderweg bijsturen, omdat geen enkel plan ongewijzigd het echte leven overleeft.",
+          "Het doel is geen transformatiefoto. Het is een sterkere, gezondere versie van jou die weet hoe ze zelfverzekerd kan zijn en die kan dragen, en een relatie met training en voeding waar je nooit meer opnieuw mee hoeft te beginnen.",
+          "Dat is de standaard. Elke client, elke keer.",
+        ],
+        more: {
+          title: "Maak kennis met Stef",
+          action: "",
+        },
+      },
       about: {
         title: "Over",
         paragraphs: [
@@ -440,6 +478,7 @@ export const siteCopy = {
           "Of je nu net begint of door een plateau heen wilt breken, ik begeleid je met een methodische, no-nonsense aanpak die resultaat oplevert.",
         ],
         imageAlt: "Portret van Stefan",
+        back: "Terug",
       },
       contact: {
         title: "Contact",
