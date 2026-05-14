@@ -70,8 +70,8 @@ export default function Home() {
   const visionBannerRef = useRef<HTMLDivElement | null>(null);
 
   const rad2deg = (rad: number) => (rad * 180) / Math.PI;
-  const homeTopRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(-80, homeBannerW))}deg)` : 'rotate(-2.7deg)';
-  const homeBotRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(40, homeBannerW))}deg)` : 'rotate(1.35deg)';
+  const homeTopRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(-50, homeBannerW))}deg)` : 'rotate(-1.7deg)';
+  const homeBotRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(30, homeBannerW))}deg)` : 'rotate(1.0deg)';
   const visionTopRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(80, visionBannerW))}deg)` : 'rotate(2.7deg)';
   const visionBotRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(-40, visionBannerW))}deg)` : 'rotate(-1.35deg)';
 
@@ -431,7 +431,7 @@ export default function Home() {
         ref={homeRef}
         className="relative z-10 flex min-h-[100svh] snap-start flex-col items-center justify-center pt-32 pb-24 text-center scroll-mt-32 md:min-h-screen md:pb-24 md:pt-36 [@media(max-height:780px)]:pt-20 [@media(max-height:780px)]:md:pt-24"
       >
-        <div className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
+        <div className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ clipPath: 'polygon(0 50px, 100% 0, 100% calc(100% - 15px), 0 calc(100% - 40px))', marginTop: '-25px', marginBottom: '-40px' }}>
           <div
             ref={homeBannerRef}
             className="relative h-[clamp(260px,38svh,320px)] w-full bg-cover bg-center sm:h-[clamp(300px,42svh,380px)] md:h-[clamp(320px,50svh,440px)]"
@@ -444,11 +444,11 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
             <div
               className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-b from-black/55 to-transparent"
-              style={{ top: '80px', transformOrigin: '0 0', transform: homeTopRot }}
+              style={{ top: '50px', transformOrigin: '0 0', transform: homeTopRot }}
             />
             <div
               className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
-              style={{ bottom: '60px', transformOrigin: '0 100%', transform: homeBotRot }}
+              style={{ bottom: '40px', transformOrigin: '0 100%', transform: homeBotRot }}
             />
             <div className="relative mx-auto flex h-full w-full max-w-6xl items-center pl-10 pr-6 py-12 sm:pl-14 md:pl-20 md:pr-10 md:py-14">
               <div className="max-w-2xl text-left">
