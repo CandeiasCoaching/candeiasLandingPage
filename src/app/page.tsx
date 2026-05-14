@@ -55,6 +55,8 @@ export default function Home() {
   const [visionParallaxY, setVisionParallaxY] = useState(0);
   const [homeBannerW, setHomeBannerW] = useState(0);
   const [visionBannerW, setVisionBannerW] = useState(0);
+  const [visionInView, setVisionInView] = useState(false);
+  const [firstBlockInView, setFirstBlockInView] = useState(false);
 
   const mainRef = useRef<HTMLDivElement | null>(null);
   const homeRef = useRef<HTMLElement | null>(null);
@@ -253,6 +255,36 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const target = visionBannerRef.current;
+    if (!target) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setVisionInView(entry.intersectionRatio > 0.35);
+        }
+      },
+      { root: mainRef.current, threshold: [0, 0.35, 0.6] },
+    );
+    io.observe(target);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const target = firstBlockRef.current;
+    if (!target) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setFirstBlockInView(entry.intersectionRatio > 0.25);
+        }
+      },
+      { root: mainRef.current, threshold: [0, 0.25, 0.5] },
+    );
+    io.observe(target);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     const sectionRef = {
       home: homeRef,
       plans: plansRef,
@@ -312,7 +344,7 @@ export default function Home() {
       }}
     >
       <header className="relative z-20">
-        <nav className="fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-3 py-2.5 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur sm:px-4 sm:py-3 md:px-6 md:py-5">
+        <nav className="fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-3 py-2.5 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur sm:px-4 sm:py-3 md:px-6 md:py-5 [@media(max-height:780px)]:py-1.5 [@media(max-height:780px)]:md:py-2">
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <button
               className="group flex items-center justify-center gap-2.5 self-center text-left md:justify-start sm:gap-4"
@@ -326,7 +358,7 @@ export default function Home() {
                 width={472}
                 height={376}
                 priority
-                className="h-auto w-11 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] sm:w-14 md:w-[4.5rem]"
+                className="h-auto w-11 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] sm:w-14 md:w-[4.5rem] [@media(max-height:780px)]:w-9 [@media(max-height:780px)]:sm:w-11 [@media(max-height:780px)]:md:w-14"
               />
               <div className="flex flex-col items-start">
                 <span className="font-serif text-[1rem] uppercase tracking-[0.12em] text-white sm:text-xl sm:tracking-[0.18em] md:text-2xl">
@@ -397,12 +429,12 @@ export default function Home() {
       <section
         id="home"
         ref={homeRef}
-        className="relative z-10 flex min-h-[100svh] snap-start flex-col items-center justify-center pt-36 pb-20 text-center scroll-mt-32 md:min-h-screen md:pb-14 md:pt-40"
+        className="relative z-10 flex min-h-[100svh] snap-start flex-col items-center justify-center pt-32 pb-24 text-center scroll-mt-32 md:min-h-screen md:pb-24 md:pt-36 [@media(max-height:780px)]:pt-20 [@media(max-height:780px)]:md:pt-24"
       >
         <div className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]" style={{ clipPath: 'polygon(0 80px, 100% 0, 100% calc(100% - 20px), 0 calc(100% - 60px))', marginTop: '-40px', marginBottom: '-60px' }}>
           <div
             ref={homeBannerRef}
-            className="relative h-[320px] w-full bg-cover bg-center sm:h-[380px] md:h-[440px]"
+            className="relative h-[clamp(260px,38svh,320px)] w-full bg-cover bg-center sm:h-[clamp(300px,42svh,380px)] md:h-[clamp(320px,50svh,440px)]"
             style={{
               backgroundImage: "url('/mockup/landing_banner_improved.png')",
               backgroundPosition: `center calc(15% + ${parallaxY}px)`,
@@ -450,12 +482,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative z-10 mx-auto mt-9 w-full max-w-6xl px-2 pb-2 sm:mt-11 sm:px-4 md:mt-16 md:px-6">
+        <div className="relative z-10 mx-auto mt-6 w-full max-w-6xl px-2 pb-2 sm:mt-8 sm:px-4 md:mt-10 md:px-6">
           <p className="hidden text-center text-[10px] uppercase tracking-[0.36em] text-white/50 sm:block md:text-xs">
             {locale === 'nl' ? 'Klantgetuigenissen' : 'Client Testimonials'}
           </p>
-          <div className="mt-5 flex items-center justify-center gap-3 md:gap-4">
-            <aside className="hidden h-[clamp(140px,calc(100svh-660px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+          <div className="mt-4 flex items-center justify-center gap-3 md:mt-5 md:gap-4">
+            <aside className="hidden h-[clamp(120px,calc(100svh-680px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{previousReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(previousReview.rating)}</p>
@@ -465,7 +497,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="flex h-[clamp(150px,28svh,220px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-2.5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:h-[clamp(190px,34svh,260px)] sm:p-4 md:w-[500px] md:h-[clamp(240px,48svh,300px)] md:p-6">
+            <div className="flex h-[clamp(140px,24svh,220px)] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-2.5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:h-[clamp(170px,28svh,260px)] sm:p-4 md:w-[500px] md:h-[clamp(190px,34svh,300px)] md:p-6">
               <div className="flex items-center justify-between gap-3 sm:gap-4">
                 <div className="flex items-center gap-2.5 sm:gap-3">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-sm font-bold text-black sm:h-8 sm:w-8 sm:text-base">
@@ -529,7 +561,7 @@ export default function Home() {
               </div>
             </div>
 
-            <aside className="hidden h-[clamp(140px,calc(100svh-660px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
+            <aside className="hidden h-[clamp(120px,calc(100svh-680px),170px)] w-[281px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/18 p-3 text-left shadow-[0_12px_28px_rgba(0,0,0,0.28)] backdrop-blur-sm md:flex">
               <div className="mt-3">
                 <p className="text-sm font-semibold text-white/85">{nextReview.name}</p>
                 <p className="mt-1 text-xs text-[#fbbc04]">{'★'.repeat(nextReview.rating)}</p>
@@ -645,18 +677,22 @@ export default function Home() {
       <section
         id="first-block"
         ref={firstBlockRef}
-        className={`relative z-10 mx-auto flex flex-col justify-start px-6 pt-32 scroll-mt-24 md:pt-36 ${pdfExpanded ? 'min-h-fit' : 'min-h-[100svh] snap-start md:min-h-screen'}`}
+        className={`relative z-10 mx-auto flex flex-col justify-start px-6 pt-32 scroll-mt-24 md:pt-36 ${pdfExpanded ? 'min-h-fit' : 'min-h-[100svh] snap-end md:min-h-screen'}`}
       >
         <div className="mx-auto w-full max-w-6xl">
           <div className="mb-10 grid items-center gap-10 md:grid-cols-2 md:gap-12">
-            <div className="text-left">
-              <h2 className="text-xs uppercase tracking-[0.35em] text-white/80">
+            <div
+              className={`text-left transition-all duration-700 ease-out ${
+                firstBlockInView ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+              }`}
+            >
+              <h2 className="text-sm uppercase tracking-[0.35em] text-white/85 md:text-base">
                 {copy.home.firstBlock.title}
               </h2>
-              <p className="mt-5 text-lg leading-relaxed text-white/75 md:text-xl">
+              <p className="mt-5 text-base leading-relaxed text-white/85 md:text-lg">
                 Most beginner guides you find online are generic programs that are easy to follow but don&apos;t teach you anything.
               </p>
-              <p className="mt-4 text-lg leading-relaxed text-white/75 md:text-xl">
+              <p className="mt-4 text-base leading-relaxed text-white/85 md:text-lg">
                 This guide will help you understand the basics of training and dieting rather than just telling you what to do.
               </p>
             </div>
@@ -668,7 +704,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="mt-32 overflow-hidden rounded-2xl border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm">
+          <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm md:mt-12">
             <div
               className="overflow-hidden transition-[height] duration-500 ease-in-out"
               style={{ height: pdfExpanded ? '70svh' : '0px' }}
@@ -755,22 +791,42 @@ export default function Home() {
                   />
                   <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
                     <div className="max-w-2xl text-left">
-                      <h2 className="text-xs uppercase tracking-[0.35em] text-white/85 [text-shadow:_0_1px_10px_rgba(0,0,0,0.85)]">
-                        {copy.home.vision.title}
-                      </h2>
-                      <div className="mt-4 space-y-3 text-sm leading-relaxed text-white/90 md:text-base [text-shadow:_0_1px_10px_rgba(0,0,0,0.85)]">
-                        {copy.home.vision.paragraphs.map((paragraph) => (
-                          <p key={paragraph}>{paragraph}</p>
-                        ))}
+                      <div className="relative px-8 py-6 md:px-10 md:py-8">
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0"
+                          style={{
+                            backdropFilter: 'blur(10px)',
+                            WebkitBackdropFilter: 'blur(10px)',
+                            WebkitMaskImage:
+                              'radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0) 100%)',
+                            maskImage:
+                              'radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0) 100%)',
+                          }}
+                        />
+                        <div
+                          className={`relative transition-all duration-700 ease-out [text-shadow:0_2px_8px_rgba(0,0,0,0.6)] ${
+                            visionInView ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+                          }`}
+                        >
+                          <h2 className="text-sm uppercase tracking-[0.35em] text-white/95 md:text-base">
+                            {copy.home.vision.title}
+                          </h2>
+                          <div className="mt-4 space-y-3 text-sm leading-relaxed text-white/95 md:text-base">
+                            {copy.home.vision.paragraphs.map((paragraph) => (
+                              <p key={paragraph}>{paragraph}</p>
+                            ))}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setAboutPanel('bio')}
+                            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-black/45 px-5 py-3 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm transition hover:border-white/35 hover:bg-black/65"
+                          >
+                            <span>{copy.home.vision.more.title}</span>
+                            <span aria-hidden="true">→</span>
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => setAboutPanel('bio')}
-                        className="mt-6 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-black/45 px-5 py-3 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm transition hover:border-white/35 hover:bg-black/65"
-                      >
-                        <span>{copy.home.vision.more.title}</span>
-                        <span aria-hidden="true">→</span>
-                      </button>
                     </div>
                   </div>
                 </div>

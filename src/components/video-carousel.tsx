@@ -57,7 +57,7 @@ export function VideoCarousel({ videos, prevLabel = 'Previous', nextLabel = 'Nex
   return (
     <div className="relative w-full select-none">
       <div className="mb-4 text-center">
-        <p className="text-sm uppercase tracking-[0.3em] text-white/80 transition-opacity duration-300 md:text-base">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/80 transition-opacity duration-300 md:text-sm">
           {videos[active]?.label}
         </p>
       </div>
