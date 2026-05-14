@@ -450,7 +450,7 @@ export default function Home() {
               className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
               style={{ bottom: '60px', transformOrigin: '0 100%', transform: homeBotRot }}
             />
-            <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
+            <div className="relative mx-auto flex h-full w-full max-w-6xl items-center pl-10 pr-6 py-12 sm:pl-14 md:pl-20 md:pr-10 md:py-14">
               <div className="max-w-2xl text-left">
                 <h1 className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl [text-shadow:_0_2px_14px_rgba(0,0,0,0.9)]">
                   {locale === 'en' ? (

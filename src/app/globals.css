@@ -6,6 +6,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Reactively cap rem-based font sizes on small screens so users with
+   a large default text size don't overflow banners and clipped sections.
+   Uses absolute px so OS-level "large text" settings can't compound. */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}
+
 body {
   background-color: #050505;
   color: #f5f5f5;
