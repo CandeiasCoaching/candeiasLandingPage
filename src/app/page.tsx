@@ -80,6 +80,12 @@ export default function Home() {
       locale === 'nl'
         ? [
             {
+              name: 'Kim de Rooij',
+              rating: 5,
+              ago: '2 dagen geleden',
+              text: 'Top personal trainer!\n\nIk kwam bij Stef, omdat ik het krachttrainen weer wilde oppakken na een tijd eruit te hebben gelegen. Het belangrijkste vond ik dat mijn houding tijdens het trainen goed was en ik niets zou forceren.\n\nWat een top training was dat! Hij weet alles op een duidelijke en rustige manier uit te leggen. Ook zijn tips zijn super handig en goed te onthouden.\n\nEcht een aanrader 😍',
+            },
+            {
               name: 'Lara de Gelder',
               rating: 5,
               ago: '1 dag geleden',
@@ -123,6 +129,12 @@ export default function Home() {
             },
           ]
         : [
+            {
+              name: 'Kim de Rooij',
+              rating: 5,
+              ago: '2 days ago',
+              text: 'Top personal trainer!\n\nI came to Stef because I wanted to get back into strength training after a while away from it. The most important thing for me was that my posture during training was good and that I wouldn\'t force anything.\n\nWhat a great training session that was! He explains everything in a clear and calm way. His tips are also super useful and easy to remember.\n\nHighly recommended 😍',
+            },
             {
               name: 'Lara de Gelder',
               rating: 5,
