@@ -210,8 +210,6 @@ export default function Home() {
     copy.home.planDetails.advanced,
     copy.home.planDetails.premium,
     copy.home.planDetails.online4,
-    copy.home.planDetails.online12,
-    copy.home.planDetails.friendsFamily,
     copy.home.planDetails.tenSessions,
     copy.home.planDetails.varia,
   ];
@@ -592,16 +590,26 @@ export default function Home() {
         className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center overflow-hidden px-6 py-22 scroll-mt-24 md:min-h-screen md:py-28"
       >
         <div className="mx-auto w-full max-w-6xl overflow-hidden">
+          <h2 className="text-center text-xs uppercase tracking-[0.35em] text-white/80">
+            {copy.home.planDetails.title}
+          </h2>
+          <div className="mt-6 mb-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setContactExpanded(true)}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-black/45 px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm transition hover:border-white/40 hover:bg-black/65"
+            >
+              <span>{locale === 'nl' ? 'Boek Gratis Consult' : 'Book Free Consultation'}</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
           <div
             className={`flex w-[200%] transition-transform duration-700 ease-in-out ${
               plansPanel === 'details' ? 'translate-x-[-50%]' : 'translate-x-0'
             }`}
           >
             <div className="w-1/2 shrink-0 pr-0 md:pr-6">
-              <h2 className="text-center text-xs uppercase tracking-[0.35em] text-white/80">
-                {copy.home.planDetails.title}
-              </h2>
-              <div className="mt-10 grid gap-6 lg:grid-cols-2">
+              <div className="mt-2 grid max-w-3xl mx-auto gap-6 sm:grid-cols-2">
                 {[
                   { id: 'starter', ref: starterRef, plan: copy.home.planDetails.starter },
                   { id: 'standard', ref: standardRef, plan: copy.home.planDetails.standard },
@@ -610,7 +618,7 @@ export default function Home() {
                     key={item.id}
                     id={item.id}
                     ref={item.ref}
-                    className="scroll-mt-32 border border-white/10 bg-black/22 p-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-8"
+                    className="flex flex-col scroll-mt-32 border border-white/10 bg-black/22 p-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-8"
                   >
                     <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">
                       {item.plan.title}
@@ -623,7 +631,7 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-8 text-center text-3xl font-bold tracking-[0.04em] text-white">
+                    <p className="mt-auto pt-8 text-center text-3xl font-bold tracking-[0.04em] text-white">
                       {item.plan.price}
                     </p>
                   </article>
@@ -656,11 +664,11 @@ export default function Home() {
                   {copy.home.planDetails.back}
                 </button>
               </div>
-              <div className="mt-8 grid max-h-[72svh] gap-5 overflow-y-auto pr-2 lg:grid-cols-2">
+              <div className="mt-1 grid max-w-3xl mx-auto max-h-[72svh] items-stretch gap-5 overflow-y-auto pr-2 sm:grid-cols-2">
                 {additionalPlans.map((item) => (
                   <article
                     key={item.title}
-                    className="border border-white/10 bg-black/22 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.24)] backdrop-blur-sm"
+                    className="flex flex-col border border-white/10 bg-black/22 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.24)] backdrop-blur-sm"
                   >
                     <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-white underline decoration-white/60 underline-offset-4">
                       {item.title}
@@ -674,7 +682,7 @@ export default function Home() {
                       ))}
                     </ul>
                     {item.price && (
-                      <p className="mt-6 text-center text-2xl font-bold tracking-[0.04em] text-white">
+                      <p className="mt-auto pt-6 text-center text-2xl font-bold tracking-[0.04em] text-white">
                         {item.price}
                       </p>
                     )}
