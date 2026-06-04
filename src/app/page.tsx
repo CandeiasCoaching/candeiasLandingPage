@@ -773,14 +773,14 @@ export default function Home() {
               >
                 <div
                   ref={visionBannerRef}
-                  className="relative h-[420px] w-full bg-cover bg-center sm:h-[500px] md:h-[580px]"
+                  className="relative min-h-[420px] w-full bg-cover bg-center sm:min-h-[500px] md:min-h-[580px]"
                   style={{
                     backgroundImage: "url('/res/vision.jpg')",
                     backgroundPosition: `center calc(50% + ${visionParallaxY}px)`,
                     willChange: 'background-position',
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
                   <div
                     className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-b from-black/55 to-transparent"
                     style={{ top: '0px', transformOrigin: '0 0', transform: visionTopRot }}
@@ -789,20 +789,12 @@ export default function Home() {
                     className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
                     style={{ bottom: '20px', transformOrigin: '0 100%', transform: visionBotRot }}
                   />
-                  <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 py-8 md:px-10">
+                  <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-4 py-8 sm:px-6 md:px-10">
                     <div className="max-w-2xl text-left">
-                      <div className="relative px-8 py-6 md:px-10 md:py-8">
+                      <div className="relative px-5 py-5 sm:px-8 sm:py-6 md:px-10 md:py-8">
                         <div
                           aria-hidden="true"
-                          className="pointer-events-none absolute inset-0"
-                          style={{
-                            backdropFilter: 'blur(10px)',
-                            WebkitBackdropFilter: 'blur(10px)',
-                            WebkitMaskImage:
-                              'radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0) 100%)',
-                            maskImage:
-                              'radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0) 100%)',
-                          }}
+                          className="pointer-events-none absolute inset-0 rounded-2xl border border-white/10 bg-black/35 shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
                         />
                         <div
                           className={`relative transition-all duration-700 ease-out [text-shadow:0_2px_8px_rgba(0,0,0,0.6)] ${
