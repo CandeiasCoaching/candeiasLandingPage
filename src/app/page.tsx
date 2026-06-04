@@ -335,7 +335,7 @@ export default function Home() {
   return (
     <main
       ref={mainRef}
-      className="relative h-[100svh] overflow-y-auto snap-y pb-16 text-white md:h-screen md:pb-0 md:snap-mandatory"
+      className={`relative h-[100svh] overflow-y-auto snap-y pb-16 text-white md:h-screen md:pb-0 ${pdfExpanded ? 'md:snap-proximity' : 'md:snap-mandatory'}`}
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
         backgroundSize: '2000px 2000px',
