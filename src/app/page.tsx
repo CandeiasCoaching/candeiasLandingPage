@@ -7,6 +7,117 @@ import { VideoCarousel } from '@/components/video-carousel';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+type ReviewItem = {
+  name: string;
+  rating: number;
+  ago: string;
+  text: string;
+};
+
+// Fallback hardcoded reviews if API fails
+const FALLBACK_REVIEWS: { nl: ReviewItem[]; en: ReviewItem[] } = {
+  nl: [
+    {
+      name: 'Kim de Rooij',
+      rating: 5,
+      ago: '2 dagen geleden',
+      text: 'Top personal trainer!\n\nIk kwam bij Stef, omdat ik het krachttrainen weer wilde oppakken na een tijd eruit te hebben gelegen. Het belangrijkste vond ik dat mijn houding tijdens het trainen goed was en ik niets zou forceren.\n\nWat een top training was dat! Hij weet alles op een duidelijke en rustige manier uit te leggen. Ook zijn tips zijn super handig en goed te onthouden.\n\nEcht een aanrader 😍',
+    },
+    {
+      name: 'Lara de Gelder',
+      rating: 5,
+      ago: '1 dag geleden',
+      text: 'Stef is een goede coach. Ik kwam hier na een maand lang erg ziek te zijn geweest om letterlijk en figuurlijk eerst weer op krachten te komen. En daarna te bouwen aan mijn conditie en kracht.\n\nOmdat ik zelf al veel weet van voeding en sport (als yogadocent) pastte hij hier heel goed zijn uitleg en training op aan. Uitleg over verschillende spiergroepen en hoe die benut worden bij de verschillende oefeningen.\n\nOmdat ik nooit in een sportschool ben geweest en er zelfs lichtelijk iets op tegen had, heeft hij in het begin me helemaal meegenomen. Na een paar weken begonnen we wat meer uitdagende oefeningen te doen. Na twee maanden kon ik inzien waarom de sportschool een goede aanvulling is bij de sporten die ik al doe en bouwde ik langzaam mijn kracht op. Na drie maanden kreeg ik er zelfs lol in! Sterkere spieren helpen ook mijn yoga en klimsport vooruit.\n\nStef heeft een goede kennis over spier ontwikkeling, en oefeningen die het best bij je persoonlijke doelen passen. Ook let hij heel goed op techniek, zodat als je \'zelfstanding\' gaat trainen het zeker op de juiste manier aanpakt. Ook is het fijn dat hij erg flexibel is in de dagen waarop je samen traint. Ook komt hij met nieuwe frisse ideeën. Een aanrader voor iedereen die een stap verder wil komen in een fittere leefstijl!',
+    },
+    {
+      name: 'Karolina S',
+      rating: 5,
+      ago: '2 dagen geleden',
+      text: 'Ik raad Candeias Coaching aan aan iedereen die actief en concreet aan de slag wilt. Hij heeft een geweldig trainingsplan voor mij opgesteld, tijdens onze training sessies mijn techniek goed in de gaten gehouden en gecorrigeerd. Mijn dieet is ook aangepast en alles bij elkaar heeft ervoor gezorgd dat mijn doelen zijn bereikt en zelfs overtroffen.',
+    },
+    {
+      name: 'emmely bosman',
+      rating: 5,
+      ago: '4 dagen geleden',
+      text: 'Stef is een geweldige personal trainer die mij enorm heeft geholpen, zowel fysiek als mentaal. Dankzij zijn begeleiding heb ik niet alleen gewerkt aan mijn conditie en doelen, maar ook veel meer zelfvertrouwen opgebouwd. Ook maakt hij duidelijke en haalbare schema\'s op maat. Stef motiveert op een fijne manier, luistert goed en past trainingen aan op wat jij nodig hebt. Hierdoor voel ik me sterker, fitter en zekerder dan voorheen. Zeker een aanrader voor iedereen die serieus aan zichzelf wil werken!',
+    },
+    {
+      name: 'Verona Nimani',
+      rating: 5,
+      ago: '2 dagen geleden',
+      text: 'Een geweldige coach die echt aandachtig luistert en goed observeert. Met als doel afvallen door samen van regelmatige sportschoolbezoeken een gewoonte te maken.',
+    },
+    {
+      name: 'George Steven',
+      rating: 5,
+      ago: '3 dagen geleden',
+      text: 'Ik heb een paar sessies met Stef gevolgd via online coaching en dat heeft een grote impact gehad op mijn training en voeding. Wat opvalt is hoe goed hij concepten uitlegt op een manier die ik, of elke andere beginner, kan begrijpen. Ik ben ook 5 kg afgevallen sinds ik zijn adviezen opvolg. Stef is ook een erg betrokken trainer – ik kan hem niet genoeg bedanken voor zijn aanpak. Ik raad Stef ten zeerste aan aan iedereen die wil beginnen met trainen.',
+    },
+    {
+      name: 'Egy Dhio',
+      rating: 5,
+      ago: '3 dagen geleden',
+      text: 'Geweldige coach, geeft goed advies en duidelijke instructies.',
+    },
+    {
+      name: 'samuelhuusko',
+      rating: 5,
+      ago: '3 dagen geleden',
+      text: 'Zijn coachingaanpak is makkelijk te begrijpen en erg grondig.',
+    },
+  ],
+  en: [
+    {
+      name: 'Kim de Rooij',
+      rating: 5,
+      ago: '2 days ago',
+      text: 'Top personal trainer!\n\nI came to Stef because I wanted to get back into strength training after a while away from it. The most important thing for me was that my posture during training was good and that I wouldn\'t force anything.\n\nWhat a great training session that was! He explains everything in a clear and calm way. His tips are also super useful and easy to remember.\n\nHighly recommended 😍',
+    },
+    {
+      name: 'Lara de Gelder',
+      rating: 5,
+      ago: '1 day ago',
+      text: 'Stef is a great coach. I came to him after a month of being very ill, to first regain my strength — both literally and figuratively — and then build up my conditioning and strength.\n\nBecause I already know a lot about nutrition and sport (as a yoga teacher), he tailored his explanations and training accordingly, covering the different muscle groups and how they\'re used in various exercises.\n\nBecause I had never been to a gym and was even slightly opposed to it, he eased me in completely at the start. After a few weeks we began doing more challenging exercises. After two months I could see why the gym is a great complement to the sports I already do, and I was slowly building strength. After three months I was even enjoying it! Stronger muscles also help my yoga and climbing.\n\nStef has solid knowledge of muscle development and the exercises that best fit your personal goals. He also pays close attention to technique, so when you train on your own you\'ll do it the right way. It\'s also great that he\'s very flexible with training days, and he comes up with fresh new ideas. Recommended for anyone who wants to take a step further toward a fitter lifestyle!',
+    },
+    {
+      name: 'Karolina S',
+      rating: 5,
+      ago: '2 days ago',
+      text: 'I highly recommend Candeias Coaching to anyone who wants practical, concrete progress. He created a great training plan for me, closely watched and corrected my technique during sessions, and adjusted my diet. Together, this helped me reach and even exceed my goals.',
+    },
+    {
+      name: 'emmely bosman',
+      rating: 5,
+      ago: '4 days ago',
+      text: 'Stef is an excellent personal trainer who has helped me enormously, both physically and mentally. Thanks to his guidance, I improved my fitness and confidence with clear, realistic programs. He motivates in a supportive way, listens well, and adapts training to what you need.',
+    },
+    {
+      name: 'Verona Nimani',
+      rating: 5,
+      ago: '2 days ago',
+      text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
+    },
+    {
+      name: 'George Steven',
+      rating: 5,
+      ago: '3 days ago',
+      text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
+    },
+    {
+      name: 'Egy Dhio',
+      rating: 5,
+      ago: '3 days ago',
+      text: 'Great coach, gives great advice and clear instructions.',
+    },
+    {
+      name: 'samuelhuusko',
+      rating: 5,
+      ago: '3 days ago',
+      text: 'His approach to coaching is easy to understand and very thorough.',
+    },
+  ],
+};
+
 const VIDEOS_BASE_URL = (process.env.NEXT_PUBLIC_VIDEOS_BASE_URL ?? '/res/videos').replace(/\/$/, '');
 
 const videoUrl = (filename: string) => `${VIDEOS_BASE_URL}/${encodeURIComponent(filename)}`;
@@ -31,13 +142,6 @@ type PlanDetailCard = {
   title: string;
   features: string[];
   price?: string;
-};
-
-type ReviewItem = {
-  name: string;
-  rating: number;
-  ago: string;
-  text: string;
 };
 
 type SectionId = 'home' | 'plans' | 'starter' | 'standard' | 'first-block' | 'about';
@@ -75,111 +179,7 @@ export default function Home() {
   const visionTopRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(80, visionBannerW))}deg)` : 'rotate(2.7deg)';
   const visionBotRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(-40, visionBannerW))}deg)` : 'rotate(-1.35deg)';
 
-  const reviews = useMemo<ReviewItem[]>(
-    () =>
-      locale === 'nl'
-        ? [
-            {
-              name: 'Kim de Rooij',
-              rating: 5,
-              ago: '2 dagen geleden',
-              text: 'Top personal trainer!\n\nIk kwam bij Stef, omdat ik het krachttrainen weer wilde oppakken na een tijd eruit te hebben gelegen. Het belangrijkste vond ik dat mijn houding tijdens het trainen goed was en ik niets zou forceren.\n\nWat een top training was dat! Hij weet alles op een duidelijke en rustige manier uit te leggen. Ook zijn tips zijn super handig en goed te onthouden.\n\nEcht een aanrader 😍',
-            },
-            {
-              name: 'Lara de Gelder',
-              rating: 5,
-              ago: '1 dag geleden',
-              text: 'Stef is een goede coach. Ik kwam hier na een maand lang erg ziek te zijn geweest om letterlijk en figuurlijk eerst weer op krachten te komen. En daarna te bouwen aan mijn conditie en kracht.\n\nOmdat ik zelf al veel weet van voeding en sport (als yogadocent) pastte hij hier heel goed zijn uitleg en training op aan. Uitleg over verschillende spiergroepen en hoe die benut worden bij de verschillende oefeningen.\n\nOmdat ik nooit in een sportschool ben geweest en er zelfs lichtelijk iets op tegen had, heeft hij in het begin me helemaal meegenomen. Na een paar weken begonnen we wat meer uitdagende oefeningen te doen. Na twee maanden kon ik inzien waarom de sportschool een goede aanvulling is bij de sporten die ik al doe en bouwde ik langzaam mijn kracht op. Na drie maanden kreeg ik er zelfs lol in! Sterkere spieren helpen ook mijn yoga en klimsport vooruit.\n\nStef heeft een goede kennis over spier ontwikkeling, en oefeningen die het best bij je persoonlijke doelen passen. Ook let hij heel goed op techniek, zodat als je \'zelfstanding\' gaat trainen het zeker op de juiste manier aanpakt. Ook is het fijn dat hij erg flexibel is in de dagen waarop je samen traint. Ook komt hij met nieuwe frisse ideeën. Een aanrader voor iedereen die een stap verder wil komen in een fittere leefstijl!',
-            },
-            {
-              name: 'Karolina S',
-              rating: 5,
-              ago: '2 dagen geleden',
-              text: 'Ik raad Candeias Coaching aan aan iedereen die actief en concreet aan de slag wilt. Hij heeft een geweldig trainingsplan voor mij opgesteld, tijdens onze training sessies mijn techniek goed in de gaten gehouden en gecorrigeerd. Mijn dieet is ook aangepast en alles bij elkaar heeft ervoor gezorgd dat mijn doelen zijn bereikt en zelfs overtroffen.',
-            },
-            {
-              name: 'emmely bosman',
-              rating: 5,
-              ago: '4 dagen geleden',
-              text: 'Stef is een geweldige personal trainer die mij enorm heeft geholpen, zowel fysiek als mentaal. Dankzij zijn begeleiding heb ik niet alleen gewerkt aan mijn conditie en doelen, maar ook veel meer zelfvertrouwen opgebouwd. Ook maakt hij duidelijke en haalbare schema\'s op maat. Stef motiveert op een fijne manier, luistert goed en past trainingen aan op wat jij nodig hebt. Hierdoor voel ik me sterker, fitter en zekerder dan voorheen. Zeker een aanrader voor iedereen die serieus aan zichzelf wil werken!',
-            },
-            {
-              name: 'Verona Nimani',
-              rating: 5,
-              ago: '2 dagen geleden',
-              text: 'Een geweldige coach die echt aandachtig luistert en goed observeert. Met als doel afvallen door samen van regelmatige sportschoolbezoeken een gewoonte te maken.',
-            },
-            {
-              name: 'George Steven',
-              rating: 5,
-              ago: '3 dagen geleden',
-              text: 'Ik heb een paar sessies met Stef gevolgd via online coaching en dat heeft een grote impact gehad op mijn training en voeding. Wat opvalt is hoe goed hij concepten uitlegt op een manier die ik, of elke andere beginner, kan begrijpen. Ik ben ook 5 kg afgevallen sinds ik zijn adviezen opvolg. Stef is ook een erg betrokken trainer – ik kan hem niet genoeg bedanken voor zijn aanpak. Ik raad Stef ten zeerste aan aan iedereen die wil beginnen met trainen.',
-            },
-            {
-              name: 'Egy Dhio',
-              rating: 5,
-              ago: '3 dagen geleden',
-              text: 'Geweldige coach, geeft goed advies en duidelijke instructies.',
-            },
-            {
-              name: 'samuelhuusko',
-              rating: 5,
-              ago: '3 dagen geleden',
-              text: 'Zijn coachingaanpak is makkelijk te begrijpen en erg grondig.',
-            },
-          ]
-        : [
-            {
-              name: 'Kim de Rooij',
-              rating: 5,
-              ago: '2 days ago',
-              text: 'Top personal trainer!\n\nI came to Stef because I wanted to get back into strength training after a while away from it. The most important thing for me was that my posture during training was good and that I wouldn\'t force anything.\n\nWhat a great training session that was! He explains everything in a clear and calm way. His tips are also super useful and easy to remember.\n\nHighly recommended 😍',
-            },
-            {
-              name: 'Lara de Gelder',
-              rating: 5,
-              ago: '1 day ago',
-              text: 'Stef is a great coach. I came to him after a month of being very ill, to first regain my strength — both literally and figuratively — and then build up my conditioning and strength.\n\nBecause I already know a lot about nutrition and sport (as a yoga teacher), he tailored his explanations and training accordingly, covering the different muscle groups and how they\'re used in various exercises.\n\nBecause I had never been to a gym and was even slightly opposed to it, he eased me in completely at the start. After a few weeks we began doing more challenging exercises. After two months I could see why the gym is a great complement to the sports I already do, and I was slowly building strength. After three months I was even enjoying it! Stronger muscles also help my yoga and climbing.\n\nStef has solid knowledge of muscle development and the exercises that best fit your personal goals. He also pays close attention to technique, so when you train on your own you\'ll do it the right way. It\'s also great that he\'s very flexible with training days, and he comes up with fresh new ideas. Recommended for anyone who wants to take a step further toward a fitter lifestyle!',
-            },
-            {
-              name: 'Karolina S',
-              rating: 5,
-              ago: '2 days ago',
-              text: 'I highly recommend Candeias Coaching to anyone who wants practical, concrete progress. He created a great training plan for me, closely watched and corrected my technique during sessions, and adjusted my diet. Together, this helped me reach and even exceed my goals.',
-            },
-            {
-              name: 'emmely bosman',
-              rating: 5,
-              ago: '4 days ago',
-              text: 'Stef is an excellent personal trainer who has helped me enormously, both physically and mentally. Thanks to his guidance, I improved my fitness and confidence with clear, realistic programs. He motivates in a supportive way, listens well, and adapts training to what you need.',
-            },
-            {
-              name: 'Verona Nimani',
-              rating: 5,
-              ago: '2 days ago',
-              text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
-            },
-            {
-              name: 'George Steven',
-              rating: 5,
-              ago: '3 days ago',
-              text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
-            },
-            {
-              name: 'Egy Dhio',
-              rating: 5,
-              ago: '3 days ago',
-              text: 'Great coach, gives great advice and clear instructions.',
-            },
-            {
-              name: 'samuelhuusko',
-              rating: 5,
-              ago: '3 days ago',
-              text: 'His approach to coaching is easy to understand and very thorough.',
-            },
-          ],
-    [locale]
-  );
+  const [reviews, setReviews] = useState<ReviewItem[]>(FALLBACK_REVIEWS[locale === 'nl' ? 'nl' : 'en']);
 
   const heroBanner = useMemo(
     () =>
@@ -244,6 +244,29 @@ export default function Home() {
     mainRef.current.scrollTo({ top: 0, behavior: 'auto' });
     setActiveSection('home');
   }, []);
+
+  // Fetch reviews from Google Places API with fallback to hardcoded reviews
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`/api/reviews?locale=${locale}`);
+        const data = await response.json();
+        
+        if (data.reviews && data.reviews.length > 0) {
+          setReviews(data.reviews);
+        } else {
+          // Fallback to hardcoded reviews if API returns empty
+          setReviews(FALLBACK_REVIEWS[locale === 'nl' ? 'nl' : 'en']);
+        }
+      } catch (error) {
+        console.warn('Failed to fetch Google reviews, using fallback:', error);
+        // Fallback to hardcoded reviews if API fails
+        setReviews(FALLBACK_REVIEWS[locale === 'nl' ? 'nl' : 'en']);
+      }
+    };
+
+    fetchReviews();
+  }, [locale]);
 
   useEffect(() => {
     const observers: ResizeObserver[] = [];
