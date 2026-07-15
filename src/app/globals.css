@@ -26,6 +26,51 @@ body {
   color: #f5f5f5;
 }
 
+.site-nav,
+.site-nav-inner,
+.site-brand,
+.site-brand-logo,
+.site-brand-title,
+.site-contact-bar,
+.site-contact-trigger {
+  transition-duration: 500ms;
+  transition-property: gap, padding, width, font-size, min-height;
+  transition-timing-function: ease;
+}
+
+.site-nav.site-chrome-collapsed {
+  padding-bottom: 0.25rem !important;
+  padding-top: 0.25rem !important;
+}
+
+.site-nav.site-chrome-collapsed .site-nav-inner {
+  gap: 0.25rem;
+}
+
+.site-nav.site-chrome-collapsed .site-brand-logo {
+  width: 2rem !important;
+}
+
+.site-nav.site-chrome-collapsed .site-brand-title {
+  font-size: 0.875rem !important;
+}
+
+.site-nav.site-chrome-collapsed .site-brand-subtitle,
+.site-contact-bar.site-chrome-collapsed .site-contact-summary {
+  display: none;
+}
+
+.site-contact-bar.site-chrome-collapsed .site-contact-trigger {
+  padding-bottom: 0.25rem !important;
+  padding-top: 0.25rem !important;
+}
+
+@media (max-width: 767px) {
+  .site-nav.site-chrome-collapsed .site-brand {
+    display: none;
+  }
+}
+
 .font-serif {
   font-family: var(--font-serif), "Times New Roman", serif;
 }
@@ -64,4 +109,93 @@ body {
   background-size: 180px 180px;
   opacity: 0.6;
   mix-blend-mode: multiply;
+}
+
+@keyframes plans-gallery-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.plans-gallery-reveal {
+  animation: plans-gallery-reveal 1000ms ease-out both;
+}
+
+@media (min-width: 640px) and (max-height: 850px) {
+  .plan-summary-cards {
+    gap: 1rem !important;
+  }
+
+  .plan-summary-card {
+    padding: 1rem !important;
+  }
+
+  .plan-summary-title {
+    font-size: 0.9375rem !important;
+  }
+
+  .plan-summary-features {
+    margin-top: 0.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.2rem !important;
+  }
+
+  .plan-summary-features > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.375rem;
+  }
+
+  .plan-summary-book {
+    margin-top: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.625rem !important;
+  }
+
+  .plan-summary-price {
+    padding-top: 0.75rem !important;
+    font-size: 1.75rem !important;
+    line-height: 2rem !important;
+  }
+}
+
+@media (min-width: 640px) and (max-height: 680px) {
+  .plan-summary-card {
+    padding: 0.5rem !important;
+  }
+
+  .plan-summary-title {
+    font-size: 0.6875rem !important;
+  }
+
+  .plan-summary-features {
+    margin-top: 0.375rem !important;
+    font-size: 0.6875rem !important;
+    line-height: 0.875rem !important;
+  }
+
+  .plan-summary-features > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.1875rem;
+  }
+
+  .plan-summary-book {
+    margin-top: 0.375rem !important;
+    padding: 0.3125rem 0.625rem !important;
+    font-size: 0.5625rem !important;
+  }
+
+  .plan-summary-price {
+    padding-top: 0.25rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plans-gallery-reveal {
+    animation: none;
+  }
 }

@@ -14,106 +14,137 @@ type ReviewItem = {
   text: string;
 };
 
+const EVERFIT_ONLINE_12_WEEKS_URL = 'https://app.everfit.io/home/packages/MD799171/analytics';
+const EVERFIT_ONLINE_4_WEEKS_URL = 'https://app.everfit.io/home/packages/QC927638/analytics';
+
+const VISION_SHOTS = [
+  '/res/shots/1.jpg',
+  '/res/shots/2.jpg',
+  '/res/shots/3.png',
+  '/res/shots/4.jpg',
+  '/res/shots/5.jpg',
+  '/res/shots/20260504_170203.jpg',
+  '/res/shots/20260504_170416.jpg',
+  '/res/shots/20260504_170728(1).jpg',
+  '/res/shots/20260504_172845.jpg',
+  '/res/shots/95iXQ0FFiaSfzD5pXmOAiS3w1LOK5seBO0VybKAro0pZp98xhtx58M4VMnzZzpFap1K4NnV1DSANyBlsw1905.png',
+  '/res/shots/HwHqjthOCu-CEKsz92zETXRTx_lrNLVVoBi80Tb5lxvKxOgJwcp9iSkB27i2s5EI4jzg6Asb4DhANcLPw1905.png',
+  '/res/shots/jIEwjGKRWNmCgpCmymPd-iAdAnjas-f2aojNJGtSrR2UcBsV4_kSidorOgAG9kfDV7mVR_RAxYq-gyo6w1905.png',
+  '/res/shots/vEcF4B2wsDDxI7vxeZTylanXHrVnq1alXqWvbsDlOxRe11t3Te2CukdWIsdkSp-PRxc-niRUJ26RTj90w1905.png',
+] as const;
+
 // Fallback hardcoded reviews if API fails
 const FALLBACK_REVIEWS: { nl: ReviewItem[]; en: ReviewItem[] } = {
   nl: [
     {
+      name: 'Angelique Franzen',
+      rating: 5,
+      ago: '3 weken geleden',
+      text: 'Ik wilde graag aan mijn gezondheid werken maar zag er enorm tegen op om richting de sportschool te gaan. Ik heb Stef leren kennen als een heel fijn persoon die alle drempels snel wegnam. Zijn rustige aanpak en uitleg werkt voor mij erg prettig. Tijdens het sporten kan hij me behoorlijk uitdagen maar hij ziet snel wanneer de grens bereikt is. Na een training ga je altijd met een goed gevoel naar huis en weet je wat je de volgende training zelfstandig kan doen. Hij corrigeert waar nodig maar is zeker ook van de complimenten. Voor mij echt een motivatie en een stok achter de deur, ik had niet verwacht dat ik me zo snel veel fitter zou voelen en het nog leuk zou vinden ook!',
+    },
+    {
+      name: 'Niels Franzen',
+      rating: 5,
+      ago: '3 weken geleden',
+      text: 'Ik ben nu ruim twee maanden onder begeleiding van Stef aan mijn gezondheid aan het werken. Het mooie is dat je in overleg met Stef je persoonlijke doelen kan vaststellen en dat je daarin wel uitgedaagd wordt op haalbaarheid. Nadat we mijn persoonlijke doelen hadden besproken word je door Stef ontzorgd. Hij maakt een realistisch plan van aanpak, zorgt voor voedingsschema\'s en een trainingsplanning die in overleg gedurende het traject naar wens aangepast kan worden. Zijn aanpak is echt maatwerk. Zijn uitleg tijdens het sporten en op het gebied van voeding is erg fijn en beperkt zich niet tot de contactmomenten; je kan Stef elk moment van de dag om advies vragen. En niet geheel onbelangrijk, het resultaat mag er zijn.',
+    },
+    {
       name: 'Kim de Rooij',
       rating: 5,
-      ago: '2 dagen geleden',
+      ago: '1 maand geleden',
       text: 'Top personal trainer!\n\nIk kwam bij Stef, omdat ik het krachttrainen weer wilde oppakken na een tijd eruit te hebben gelegen. Het belangrijkste vond ik dat mijn houding tijdens het trainen goed was en ik niets zou forceren.\n\nWat een top training was dat! Hij weet alles op een duidelijke en rustige manier uit te leggen. Ook zijn tips zijn super handig en goed te onthouden.\n\nEcht een aanrader 😍',
     },
     {
       name: 'Lara de Gelder',
       rating: 5,
-      ago: '1 dag geleden',
+      ago: '2 maanden geleden',
       text: 'Stef is een goede coach. Ik kwam hier na een maand lang erg ziek te zijn geweest om letterlijk en figuurlijk eerst weer op krachten te komen. En daarna te bouwen aan mijn conditie en kracht.\n\nOmdat ik zelf al veel weet van voeding en sport (als yogadocent) pastte hij hier heel goed zijn uitleg en training op aan. Uitleg over verschillende spiergroepen en hoe die benut worden bij de verschillende oefeningen.\n\nOmdat ik nooit in een sportschool ben geweest en er zelfs lichtelijk iets op tegen had, heeft hij in het begin me helemaal meegenomen. Na een paar weken begonnen we wat meer uitdagende oefeningen te doen. Na twee maanden kon ik inzien waarom de sportschool een goede aanvulling is bij de sporten die ik al doe en bouwde ik langzaam mijn kracht op. Na drie maanden kreeg ik er zelfs lol in! Sterkere spieren helpen ook mijn yoga en klimsport vooruit.\n\nStef heeft een goede kennis over spier ontwikkeling, en oefeningen die het best bij je persoonlijke doelen passen. Ook let hij heel goed op techniek, zodat als je \'zelfstanding\' gaat trainen het zeker op de juiste manier aanpakt. Ook is het fijn dat hij erg flexibel is in de dagen waarop je samen traint. Ook komt hij met nieuwe frisse ideeën. Een aanrader voor iedereen die een stap verder wil komen in een fittere leefstijl!',
     },
     {
       name: 'Karolina S',
       rating: 5,
-      ago: '2 dagen geleden',
-      text: 'Ik raad Candeias Coaching aan aan iedereen die actief en concreet aan de slag wilt. Hij heeft een geweldig trainingsplan voor mij opgesteld, tijdens onze training sessies mijn techniek goed in de gaten gehouden en gecorrigeerd. Mijn dieet is ook aangepast en alles bij elkaar heeft ervoor gezorgd dat mijn doelen zijn bereikt en zelfs overtroffen.',
-    },
-    {
-      name: 'emmely bosman',
-      rating: 5,
-      ago: '4 dagen geleden',
-      text: 'Stef is een geweldige personal trainer die mij enorm heeft geholpen, zowel fysiek als mentaal. Dankzij zijn begeleiding heb ik niet alleen gewerkt aan mijn conditie en doelen, maar ook veel meer zelfvertrouwen opgebouwd. Ook maakt hij duidelijke en haalbare schema\'s op maat. Stef motiveert op een fijne manier, luistert goed en past trainingen aan op wat jij nodig hebt. Hierdoor voel ik me sterker, fitter en zekerder dan voorheen. Zeker een aanrader voor iedereen die serieus aan zichzelf wil werken!',
-    },
-    {
-      name: 'Verona Nimani',
-      rating: 5,
-      ago: '2 dagen geleden',
-      text: 'Een geweldige coach die echt aandachtig luistert en goed observeert. Met als doel afvallen door samen van regelmatige sportschoolbezoeken een gewoonte te maken.',
-    },
-    {
-      name: 'George Steven',
-      rating: 5,
-      ago: '3 dagen geleden',
-      text: 'Ik heb een paar sessies met Stef gevolgd via online coaching en dat heeft een grote impact gehad op mijn training en voeding. Wat opvalt is hoe goed hij concepten uitlegt op een manier die ik, of elke andere beginner, kan begrijpen. Ik ben ook 5 kg afgevallen sinds ik zijn adviezen opvolg. Stef is ook een erg betrokken trainer – ik kan hem niet genoeg bedanken voor zijn aanpak. Ik raad Stef ten zeerste aan aan iedereen die wil beginnen met trainen.',
+      ago: '2 maanden geleden',
+      text: 'Ik raad Candeias Coaching aan aan iedereen die actief en concreet aan de slag wilt. Hij heeft een geweldig trainingsplan voor mij opgesteld, tijdens onze trainingssessies mijn techniek goed in de gaten gehouden en gecorrigeerd. Mijn dieet is ook aangepast en alles bij elkaar heeft ervoor gezorgd dat mijn doelen zijn bereikt en zelfs overtroffen.',
     },
     {
       name: 'Egy Dhio',
       rating: 5,
-      ago: '3 dagen geleden',
-      text: 'Geweldige coach, geeft goed advies en duidelijke instructies.',
+      ago: '2 maanden geleden',
+      text: 'Great coach, gives great advice and clear instructions',
+    },
+    {
+      name: 'George Steven',
+      rating: 5,
+      ago: '2 maanden geleden',
+      text: 'I worked with Stef for a few sessions via early online coaching and its made a huge impact on my training and nutrition. I had roughly 6 months of consistent lifting experience and my goal has been to lose weight and build muscle. The problems I faced was a lack of understanding of proper nutrition and progression models.\n\nWhat is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. One key thing he clarified about nutrition was the energy balance. I knew that I had to change my eating habits, and started substituting "junk" foods with "healthy" foods. However, I was not aware I was overeating by eating at my maintenance calories. My weight loss became stagnant until he explained this. He also explained very well carb timing around training and varying the calorie intake on rest days vs training days. This improved my performance in the gym and I saw significantly improved performance. I also lost 5kg since taking on his advice. Another topic Stef illustrated a great understanding of was progression systems. He taught me to use double progression for my lifts - hitting the top of the rep range over a series of sessions before increasing load. I saw steady strength increases in my compound movements.\n\nStef is also a very compassionate trainer. When I wanted to give up due to mental health difficulties, he chatted with me one on one and listened. He gave great encouragement to me and I still use that today to keep pushing myself to be the best I can. I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
     },
     {
       name: 'samuelhuusko',
       rating: 5,
-      ago: '3 dagen geleden',
-      text: 'Zijn coachingaanpak is makkelijk te begrijpen en erg grondig.',
+      ago: '2 maanden geleden',
+      text: 'His approach to coaching is easy to understand and very thorough.',
+    },
+    {
+      name: 'emmely bosman',
+      rating: 5,
+      ago: '2 maanden geleden',
+      text: 'Stef is een geweldige personal trainer die mij enorm heeft geholpen, zowel fysiek als mentaal. Dankzij zijn begeleiding heb ik niet alleen gewerkt aan mijn conditie en doelen, maar ook veel meer zelfvertrouwen opgebouwd. Ook maakt hij duidelijke en haalbare schema\'s op maat.\n\nStef motiveert op een fijne manier, luistert goed en past trainingen aan op wat jij nodig hebt. Hierdoor voel ik me sterker, fitter en zekerder dan voorheen. Zeker een aanrader voor iedereen die serieus aan zichzelf wil werken!',
     },
   ],
   en: [
     {
+      name: 'Angelique Franzen',
+      rating: 5,
+      ago: '3 weeks ago',
+      text: 'I wanted to work on my health, but I really dreaded going to the gym. I got to know Stef as a very pleasant person who quickly removed all those barriers. His calm approach and explanations work very well for me. During training he can really challenge me, but he quickly sees when the limit has been reached. After a session you always go home feeling good and you know what you can do on your own next time. He corrects where needed, but he is also generous with compliments. For me he is a real motivator and a strong push in the right direction. I did not expect to feel so much fitter so quickly and to actually enjoy it too!',
+    },
+    {
+      name: 'Niels Franzen',
+      rating: 5,
+      ago: '3 weeks ago',
+      text: 'I have been working on my health with Stef for well over two months now. The great thing is that together with Stef you can define your personal goals, and he still challenges you on whether they are realistic. After we discussed my goals, Stef took a lot off my plate. He created a realistic plan, provided nutrition schedules, and set up a training plan that can be adjusted during the process whenever needed. His approach is truly tailored. His explanations during training and around nutrition are very helpful and are not limited to the contact moments; you can ask Stef for advice at any time of day. And not unimportant: the results speak for themselves.',
+    },
+    {
       name: 'Kim de Rooij',
       rating: 5,
-      ago: '2 days ago',
+      ago: '1 month ago',
       text: 'Top personal trainer!\n\nI came to Stef because I wanted to get back into strength training after a while away from it. The most important thing for me was that my posture during training was good and that I wouldn\'t force anything.\n\nWhat a great training session that was! He explains everything in a clear and calm way. His tips are also super useful and easy to remember.\n\nHighly recommended 😍',
     },
     {
       name: 'Lara de Gelder',
       rating: 5,
-      ago: '1 day ago',
+      ago: '2 months ago',
       text: 'Stef is a great coach. I came to him after a month of being very ill, to first regain my strength — both literally and figuratively — and then build up my conditioning and strength.\n\nBecause I already know a lot about nutrition and sport (as a yoga teacher), he tailored his explanations and training accordingly, covering the different muscle groups and how they\'re used in various exercises.\n\nBecause I had never been to a gym and was even slightly opposed to it, he eased me in completely at the start. After a few weeks we began doing more challenging exercises. After two months I could see why the gym is a great complement to the sports I already do, and I was slowly building strength. After three months I was even enjoying it! Stronger muscles also help my yoga and climbing.\n\nStef has solid knowledge of muscle development and the exercises that best fit your personal goals. He also pays close attention to technique, so when you train on your own you\'ll do it the right way. It\'s also great that he\'s very flexible with training days, and he comes up with fresh new ideas. Recommended for anyone who wants to take a step further toward a fitter lifestyle!',
     },
     {
       name: 'Karolina S',
       rating: 5,
-      ago: '2 days ago',
+      ago: '2 months ago',
       text: 'I highly recommend Candeias Coaching to anyone who wants practical, concrete progress. He created a great training plan for me, closely watched and corrected my technique during sessions, and adjusted my diet. Together, this helped me reach and even exceed my goals.',
-    },
-    {
-      name: 'emmely bosman',
-      rating: 5,
-      ago: '4 days ago',
-      text: 'Stef is an excellent personal trainer who has helped me enormously, both physically and mentally. Thanks to his guidance, I improved my fitness and confidence with clear, realistic programs. He motivates in a supportive way, listens well, and adapts training to what you need.',
-    },
-    {
-      name: 'Verona Nimani',
-      rating: 5,
-      ago: '2 days ago',
-      text: 'A great coach who truly listens attentively and is observant. With the goal of weight loss by making regular gym visits a habit together.',
-    },
-    {
-      name: 'George Steven',
-      rating: 5,
-      ago: '3 days ago',
-      text: 'I worked with Stef for a few sessions via early online coaching and it\'s made a huge impact on my training and nutrition. What is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. I also lost 5kg since taking on his advice. Stef is also a very compassionate trainer - I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
     },
     {
       name: 'Egy Dhio',
       rating: 5,
-      ago: '3 days ago',
-      text: 'Great coach, gives great advice and clear instructions.',
+      ago: '2 months ago',
+      text: 'Great coach, gives great advice and clear instructions',
+    },
+    {
+      name: 'George Steven',
+      rating: 5,
+      ago: '2 months ago',
+      text: 'I worked with Stef for a few sessions via early online coaching and its made a huge impact on my training and nutrition. I had roughly 6 months of consistent lifting experience and my goal has been to lose weight and build muscle. The problems I faced was a lack of understanding of proper nutrition and progression models.\n\nWhat is clear about Stef is how great he is at breaking down concepts to a level that I, or any other beginner, can understand. One key thing he clarified about nutrition was the energy balance. I knew that I had to change my eating habits, and started substituting "junk" foods with "healthy" foods. However, I was not aware I was overeating by eating at my maintenance calories. My weight loss became stagnant until he explained this. He also explained very well carb timing around training and varying the calorie intake on rest days vs training days. This improved my performance in the gym and I saw significantly improved performance. I also lost 5kg since taking on his advice. Another topic Stef illustrated a great understanding of was progression systems. He taught me to use double progression for my lifts - hitting the top of the rep range over a series of sessions before increasing load. I saw steady strength increases in my compound movements.\n\nStef is also a very compassionate trainer. When I wanted to give up due to mental health difficulties, he chatted with me one on one and listened. He gave great encouragement to me and I still use that today to keep pushing myself to be the best I can. I cannot thank Stef enough for his approach to coaching. I highly recommend Stef to those who are looking to start training themselves.',
     },
     {
       name: 'samuelhuusko',
       rating: 5,
-      ago: '3 days ago',
+      ago: '2 months ago',
       text: 'His approach to coaching is easy to understand and very thorough.',
+    },
+    {
+      name: 'emmely bosman',
+      rating: 5,
+      ago: '2 months ago',
+      text: 'Stef is an excellent personal trainer who has helped me enormously, both physically and mentally. Thanks to his guidance, I not only worked on my fitness and goals, but also built much more self-confidence. He also creates clear and realistic custom plans.\n\nStef motivates in a very pleasant way, listens carefully, and adapts training to what you need. Because of that I feel stronger, fitter, and more confident than before. Definitely recommended for anyone who seriously wants to work on themselves!',
     },
   ],
 };
@@ -154,12 +185,16 @@ export default function Home() {
   const [plansPanel, setPlansPanel] = useState<'summary' | 'details'>('summary');
   const [aboutPanel, setAboutPanel] = useState<'vision' | 'bio'>('vision');
   const [contactExpanded, setContactExpanded] = useState(false);
+  const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  const [chromeInteracting, setChromeInteracting] = useState(false);
   const [pdfExpanded, setPdfExpanded] = useState(false);
   const [parallaxY, setParallaxY] = useState(0);
   const [visionParallaxY, setVisionParallaxY] = useState(0);
+  const [activeVisionShot, setActiveVisionShot] = useState(0);
+  const [activePlansShots, setActivePlansShots] = useState([0, 3, 6, 9]);
   const [homeBannerW, setHomeBannerW] = useState(0);
-  const [visionBannerW, setVisionBannerW] = useState(0);
   const [visionInView, setVisionInView] = useState(false);
+  const [plansInView, setPlansInView] = useState(false);
   const [firstBlockInView, setFirstBlockInView] = useState(false);
 
   const mainRef = useRef<HTMLDivElement | null>(null);
@@ -176,8 +211,6 @@ export default function Home() {
   const rad2deg = (rad: number) => (rad * 180) / Math.PI;
   const homeTopRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(-50, homeBannerW))}deg)` : 'rotate(-1.7deg)';
   const homeBotRot = homeBannerW ? `rotate(${rad2deg(Math.atan2(30, homeBannerW))}deg)` : 'rotate(1.0deg)';
-  const visionTopRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(80, visionBannerW))}deg)` : 'rotate(2.7deg)';
-  const visionBotRot = visionBannerW ? `rotate(${rad2deg(Math.atan2(-40, visionBannerW))}deg)` : 'rotate(-1.35deg)';
 
   const [reviews, setReviews] = useState<ReviewItem[]>(FALLBACK_REVIEWS[locale === 'nl' ? 'nl' : 'en']);
 
@@ -206,12 +239,14 @@ export default function Home() {
   const previousReview = reviews[(activeReview - 1 + reviews.length) % reviews.length];
   const nextReview = reviews[(activeReview + 1) % reviews.length];
 
-  const additionalPlans: PlanDetailCard[] = [
-    copy.home.planDetails.advanced,
-    copy.home.planDetails.premium,
-    copy.home.planDetails.online4,
-    copy.home.planDetails.tenSessions,
-    copy.home.planDetails.varia,
+  const additionalPlans: Array<{ id: string; plan: PlanDetailCard; ctaHref?: string }> = [
+    { id: 'starter', plan: copy.home.planDetails.starter, ctaHref: EVERFIT_ONLINE_12_WEEKS_URL },
+    { id: 'standard', plan: copy.home.planDetails.standard },
+    { id: 'advanced', plan: copy.home.planDetails.advanced },
+    { id: 'premium', plan: copy.home.planDetails.premium },
+    { id: 'online4', plan: copy.home.planDetails.online4, ctaHref: EVERFIT_ONLINE_4_WEEKS_URL },
+    { id: 'tenSessions', plan: copy.home.planDetails.tenSessions },
+    { id: 'varia', plan: copy.home.planDetails.varia },
   ];
 
   const scrollToSection = (section: SectionId) => {
@@ -277,13 +312,6 @@ export default function Home() {
       ro.observe(homeBannerRef.current);
       observers.push(ro);
     }
-    if (visionBannerRef.current) {
-      const ro = new ResizeObserver((entries) => {
-        for (const entry of entries) setVisionBannerW(entry.contentRect.width);
-      });
-      ro.observe(visionBannerRef.current);
-      observers.push(ro);
-    }
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
@@ -297,6 +325,21 @@ export default function Home() {
         }
       },
       { root: mainRef.current, threshold: [0, 0.35, 0.6] },
+    );
+    io.observe(target);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const target = plansRef.current;
+    if (!target) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setPlansInView(entry.intersectionRatio > 0.3);
+        }
+      },
+      { root: mainRef.current, threshold: [0, 0.3, 0.6] },
     );
     io.observe(target);
     return () => io.disconnect();
@@ -339,6 +382,46 @@ export default function Home() {
   }, [reviews.length]);
 
   useEffect(() => {
+    if (!visionInView) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveVisionShot((index) => (index + 1) % VISION_SHOTS.length);
+    }, 4500);
+
+    return () => window.clearInterval(intervalId);
+  }, [visionInView]);
+
+  useEffect(() => {
+    if (!plansInView) return;
+
+    const timeoutIds: number[] = [];
+    let disposed = false;
+
+    const schedulePane = (paneIndex: number, initialDelay: boolean) => {
+      const delay = initialDelay
+        ? 3600 + paneIndex * 1300 + Math.random() * 2400
+        : 7000 + Math.random() * 8000;
+
+      timeoutIds[paneIndex] = window.setTimeout(() => {
+        if (disposed) return;
+        setActivePlansShots((shots) =>
+          shots.map((shot, index) =>
+            index === paneIndex ? (shot + 1) % VISION_SHOTS.length : shot,
+          ),
+        );
+        schedulePane(paneIndex, false);
+      }, delay);
+    };
+
+    [0, 1, 2, 3].forEach((paneIndex) => schedulePane(paneIndex, true));
+
+    return () => {
+      disposed = true;
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [plansInView]);
+
+  useEffect(() => {
     const el = mainRef.current;
     if (!el) return;
     let frame = 0;
@@ -347,7 +430,8 @@ export default function Home() {
       frame = window.requestAnimationFrame(() => {
         setParallaxY(el.scrollTop * 0.25);
         if (aboutRef.current) {
-          setVisionParallaxY((el.scrollTop - aboutRef.current.offsetTop) * 0.25);
+          const visionOffset = (el.scrollTop - aboutRef.current.offsetTop) * 0.12;
+          setVisionParallaxY(Math.max(-60, Math.min(60, visionOffset)));
         }
         frame = 0;
       });
@@ -358,6 +442,33 @@ export default function Home() {
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
+
+  useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+
+    if (contactExpanded || chromeInteracting) {
+      setChromeCollapsed(false);
+      return;
+    }
+
+    let timeoutId = 0;
+    const scheduleCollapse = () => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => setChromeCollapsed(true), 1400);
+    };
+    const handleScroll = () => {
+      setChromeCollapsed(false);
+      scheduleCollapse();
+    };
+
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    scheduleCollapse();
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+      window.clearTimeout(timeoutId);
+    };
+  }, [contactExpanded, chromeInteracting]);
 
   const revealPlanDetails = () => {
     setPlansPanel('details');
@@ -377,10 +488,14 @@ export default function Home() {
       }}
     >
       <header className="relative z-20">
-        <nav className="fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-3 py-2.5 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur sm:px-4 sm:py-3 md:px-6 md:py-5 [@media(max-height:780px)]:py-1.5 [@media(max-height:780px)]:md:py-2">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <nav
+          className={`site-nav fixed left-0 right-0 top-0 z-20 border-y border-white/15 bg-black/78 px-3 py-2.5 text-sm text-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur sm:px-4 sm:py-3 md:px-6 md:py-5 [@media(max-height:780px)]:py-1.5 [@media(max-height:780px)]:md:py-2 ${chromeCollapsed ? 'site-chrome-collapsed' : ''}`}
+          onPointerEnter={() => setChromeInteracting(true)}
+          onPointerLeave={() => setChromeInteracting(false)}
+        >
+          <div className="site-nav-inner mx-auto flex w-full max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <button
-              className="group flex items-center justify-center gap-2.5 self-center text-left md:justify-start sm:gap-4"
+              className="site-brand group flex items-center justify-center gap-2.5 self-center text-left md:justify-start sm:gap-4"
               onClick={() => {
                 scrollToSection('home');
               }}
@@ -391,18 +506,18 @@ export default function Home() {
                 width={472}
                 height={376}
                 priority
-                className="h-auto w-11 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] sm:w-14 md:w-[4.5rem] [@media(max-height:780px)]:w-9 [@media(max-height:780px)]:sm:w-11 [@media(max-height:780px)]:md:w-14"
+                className="site-brand-logo h-auto w-11 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition duration-300 group-hover:scale-[1.04] sm:w-14 md:w-[4.5rem] [@media(max-height:780px)]:w-9 [@media(max-height:780px)]:sm:w-11 [@media(max-height:780px)]:md:w-14"
               />
               <div className="flex flex-col items-start">
-                <span className="font-serif text-[1rem] uppercase tracking-[0.12em] text-white sm:text-xl sm:tracking-[0.18em] md:text-2xl">
+                <span className="site-brand-title font-serif text-[1rem] uppercase tracking-[0.12em] text-white sm:text-xl sm:tracking-[0.18em] md:text-2xl">
                   Candeias
                 </span>
-                <span className="text-[8px] uppercase tracking-[0.24em] text-white/60 sm:text-[10px] sm:tracking-[0.38em] md:text-[11px]">
+                <span className="site-brand-subtitle text-[8px] uppercase tracking-[0.24em] text-white/60 sm:text-[10px] sm:tracking-[0.38em] md:text-[11px]">
                   Coaching
                 </span>
               </div>
             </button>
-            <div className="flex flex-wrap items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.14em] sm:gap-4 sm:text-[11px] sm:tracking-[0.22em] md:justify-end md:gap-8 md:text-xs md:tracking-[0.25em]">
+            <div className="site-nav-links flex flex-wrap items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.14em] sm:gap-4 sm:text-[11px] sm:tracking-[0.22em] md:justify-end md:gap-8 md:text-xs md:tracking-[0.25em]">
               <button
                 className="transition hover:text-white"
               onClick={() => {
@@ -610,13 +725,69 @@ export default function Home() {
       <section
         id="plans"
         ref={plansRef}
-        className="relative z-10 mx-auto flex min-h-[100svh] snap-start items-center overflow-hidden px-6 py-22 scroll-mt-24 md:min-h-screen md:py-28"
+        className={`relative z-10 mx-auto flex h-[100svh] min-h-0 snap-start items-stretch overflow-hidden px-6 transition-[padding] duration-500 md:h-screen ${
+          chromeCollapsed
+            ? 'pb-8 pt-12 md:pb-10 md:pt-14'
+            : 'pb-[4.5rem] pt-[6.5rem] md:pb-16 md:pt-28 [@media(max-height:780px)]:pb-[4.5rem] [@media(max-height:780px)]:pt-20'
+        }`}
       >
-        <div className="mx-auto w-full max-w-6xl overflow-hidden">
-          <h2 className="text-center text-xs uppercase tracking-[0.35em] text-white/80">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 [clip-path:polygon(0_20px,100%_0,100%_calc(100%-24px),0_100%)] md:[clip-path:polygon(0_56px,100%_0,100%_calc(100%-48px),0_100%)]"
+        >
+          {[
+            { className: 'left-0 top-0 h-[44%] w-[52%]', offset: 0 },
+            { className: 'bottom-0 left-0 h-[56%] w-[52%]', offset: 3 },
+            { className: 'right-0 top-0 h-[54%] w-[48%]', offset: 6 },
+            { className: 'bottom-0 right-0 h-[46%] w-[48%]', offset: 9 },
+          ].map((pane, paneIndex) => {
+            const visibleShot = activePlansShots[paneIndex];
+            const previousShot = (visibleShot - 1 + VISION_SHOTS.length) % VISION_SHOTS.length;
+            return (
+              <div key={pane.offset} className={`absolute overflow-hidden ${pane.className}`}>
+                <Image
+                  src={VISION_SHOTS[previousShot]}
+                  alt=""
+                  fill
+                  sizes="52vw"
+                  className="scale-[1.035] object-cover"
+                />
+                <Image
+                  key={`${pane.offset}-${visibleShot}`}
+                  src={VISION_SHOTS[visibleShot]}
+                  alt=""
+                  fill
+                  sizes="52vw"
+                  className="plans-gallery-reveal object-cover"
+                />
+              </div>
+            );
+          })}
+          <div className="absolute inset-0 bg-black/[0.48] md:bg-black/[0.40]" />
+          <svg
+            className="absolute inset-0 h-full w-full overflow-visible"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <filter id="plans-gallery-border" filterUnits="userSpaceOnUse" x="-10" y="-10" width="120" height="120">
+                <feGaussianBlur stdDeviation="0.8" />
+              </filter>
+            </defs>
+            <g stroke="rgba(0,0,0,0.9)" strokeWidth="1.8" vectorEffect="non-scaling-stroke" filter="url(#plans-gallery-border)">
+              <line x1="-3" y1="2" x2="103" y2="-2" />
+              <line x1="-3" y1="102" x2="103" y2="98" />
+            </g>
+          </svg>
+          <div className="absolute bottom-0 left-[52%] top-0 w-[3px] bg-black/90" />
+          <div className="absolute left-0 top-[44%] h-[3px] w-[52%] bg-black/90" />
+          <div className="absolute left-[52%] right-0 top-[54%] h-[3px] bg-black/90" />
+        </div>
+        <div className="relative z-[1] mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col overflow-hidden">
+          <h2 className="shrink-0 text-center text-xs uppercase tracking-[0.35em] text-white/80">
             {copy.home.planDetails.title}
           </h2>
-          <div className="mt-6 mb-8 flex justify-center">
+          <div className="mb-4 mt-3 flex shrink-0 justify-center md:mb-5 md:mt-4">
             <button
               type="button"
               onClick={() => setContactExpanded(true)}
@@ -627,26 +798,32 @@ export default function Home() {
             </button>
           </div>
           <div
-            className={`flex w-[200%] transition-transform duration-700 ease-in-out ${
+            className={`flex min-h-0 w-[200%] flex-1 transition-transform duration-700 ease-in-out ${
               plansPanel === 'details' ? 'translate-x-[-50%]' : 'translate-x-0'
             }`}
           >
-            <div className="w-1/2 shrink-0 pr-0 md:pr-6">
-              <div className="mt-2 grid max-w-3xl mx-auto gap-6 sm:grid-cols-2">
+            <div className="h-full min-h-0 w-1/2 shrink-0 pr-0 md:pr-6">
+              <div className="mx-auto flex h-full min-h-0 max-w-3xl flex-col">
+                <div className="plan-summary-cards grid min-h-0 flex-1 gap-6 overflow-y-auto pr-1 sm:grid-cols-2 sm:overflow-hidden">
                 {[
-                  { id: 'starter', ref: starterRef, plan: copy.home.planDetails.starter },
+                  {
+                    id: 'starter',
+                    ref: starterRef,
+                    plan: copy.home.planDetails.starter,
+                    ctaHref: EVERFIT_ONLINE_12_WEEKS_URL,
+                  },
                   { id: 'standard', ref: standardRef, plan: copy.home.planDetails.standard },
                 ].map((item) => (
                   <article
                     key={item.id}
                     id={item.id}
                     ref={item.ref}
-                    className="flex flex-col scroll-mt-32 border border-white/10 bg-black/22 p-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-8"
+                    className="plan-summary-card flex flex-col scroll-mt-32 border border-white/[0.18] bg-black/[0.44] p-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:h-full sm:min-h-0 sm:p-8"
                   >
-                    <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">
+                    <h3 className="plan-summary-title text-sm font-semibold uppercase tracking-[0.12em] text-white">
                       {item.plan.title}
                     </h3>
-                    <ul className="mt-6 space-y-3 text-sm text-white/72 sm:text-base">
+                    <ul className="plan-summary-features mt-6 space-y-3 text-sm text-white/72 sm:text-base">
                       {item.plan.features.map((feature) => (
                         <li key={feature} className="flex gap-3">
                           <span className="text-white/45">-</span>
@@ -654,30 +831,42 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-auto pt-8 text-center text-3xl font-bold tracking-[0.04em] text-white">
+                    {item.ctaHref && (
+                      <a
+                        href={item.ctaHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="plan-summary-book mt-6 inline-flex items-center justify-center gap-2 self-center rounded-xl border border-white/25 bg-white/8 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white/45 hover:bg-white/12"
+                      >
+                        <span>{locale === 'nl' ? 'Boek nu' : 'Book now'}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                    <p className="plan-summary-price mt-auto pt-8 text-center text-3xl font-bold tracking-[0.04em] text-white">
                       {item.plan.price}
                     </p>
                   </article>
                 ))}
+                </div>
                 <button
                   id="more"
                   ref={moreRef}
                   type="button"
                   onClick={revealPlanDetails}
-                  className="lg:col-span-2 border border-white/10 bg-black/18 p-6 text-center shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm transition hover:border-white/25 hover:bg-black/28 hover:text-white sm:p-8"
+                  className="mt-4 shrink-0 border border-white/[0.16] bg-black/[0.40] px-6 py-3 text-center shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm transition hover:border-white/[0.28] hover:bg-black/[0.48] hover:text-white sm:py-4"
                 >
                   <span className="block text-sm font-semibold uppercase tracking-[0.22em] text-white">
                     {copy.home.planDetails.more.title}
                   </span>
-                  <span className="mt-3 block text-xs uppercase tracking-[0.24em] text-white/55">
+                  <span className="mt-1.5 block text-xs uppercase tracking-[0.24em] text-white/55">
                     {copy.home.planDetails.more.action}
                   </span>
                 </button>
               </div>
             </div>
 
-            <div className="w-1/2 shrink-0 pl-0 md:pl-6">
-              <div className="flex items-center justify-start">
+            <div className="flex h-full min-h-0 w-1/2 shrink-0 flex-col pl-0 md:pl-6">
+              <div className="flex shrink-0 items-center justify-start">
                 <button
                   type="button"
                   className="text-[10px] uppercase tracking-[0.22em] text-white/55 transition hover:text-white"
@@ -687,26 +876,37 @@ export default function Home() {
                   {copy.home.planDetails.back}
                 </button>
               </div>
-              <div className="mt-1 grid max-w-3xl mx-auto max-h-[72svh] items-stretch gap-5 overflow-y-auto pr-2 sm:grid-cols-2">
+              <div className="mx-auto mt-1 grid min-h-0 w-full max-w-3xl flex-1 items-stretch gap-5 overflow-y-auto pr-2 sm:grid-cols-2">
                 {additionalPlans.map((item) => (
                   <article
-                    key={item.title}
-                    className="flex flex-col border border-white/10 bg-black/22 p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.24)] backdrop-blur-sm"
+                    key={item.id}
+                    className="flex flex-col border border-white/[0.18] bg-black/[0.44] p-5 text-left shadow-[0_18px_40px_rgba(0,0,0,0.24)] backdrop-blur-sm"
                   >
                     <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-white underline decoration-white/60 underline-offset-4">
-                      {item.title}
+                      {item.plan.title}
                     </h3>
                     <ul className="mt-5 space-y-2 text-sm text-white/72">
-                      {item.features.map((feature) => (
+                      {item.plan.features.map((feature) => (
                         <li key={feature} className="flex gap-3">
                           <span className="text-white/45">-</span>
                           <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
-                    {item.price && (
+                    {item.ctaHref && (
+                      <a
+                        href={item.ctaHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-6 inline-flex items-center justify-center gap-2 self-center rounded-xl border border-white/25 bg-white/8 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white/45 hover:bg-white/12"
+                      >
+                        <span>{locale === 'nl' ? 'Boek nu' : 'Book now'}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                    {item.plan.price && (
                       <p className="mt-auto pt-6 text-center text-2xl font-bold tracking-[0.04em] text-white">
-                        {item.price}
+                        {item.plan.price}
                       </p>
                     )}
                   </article>
@@ -808,33 +1008,102 @@ export default function Home() {
             }`}
           >
             <div className="w-1/2 shrink-0">
-              <div
-                className="relative w-full shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
-                style={{
-                  clipPath: 'polygon(0 0, 100% 80px, 100% calc(100% - 60px), 0 calc(100% - 20px))',
-                }}
-              >
+              <div className="relative w-full">
+                <div className="relative w-full [clip-path:polygon(0_0,100%_20px,100%_calc(100%-24px),0_calc(100%-8px))] md:[clip-path:polygon(0_0,100%_80px,100%_calc(100%-60px),0_calc(100%-20px))]">
                 <div
                   ref={visionBannerRef}
-                  className="relative min-h-[420px] w-full bg-cover bg-center sm:min-h-[500px] md:min-h-[580px]"
-                  style={{
-                    backgroundImage: "url('/res/vision.jpg')",
-                    backgroundPosition: `center calc(50% + ${visionParallaxY}px)`,
-                    willChange: 'background-position',
-                  }}
+                  className="relative min-h-[420px] w-full overflow-hidden sm:min-h-[500px] md:min-h-[580px]"
                 >
+                  <div
+                    className="absolute -inset-y-16 inset-x-0 grid md:grid-cols-2"
+                    style={{ transform: `translate3d(0, ${visionParallaxY}px, 0)`, willChange: 'transform' }}
+                    aria-hidden="true"
+                  >
+                    <div className="relative overflow-hidden">
+                      {VISION_SHOTS.map((shot, index) => (
+                        <Image
+                          key={shot}
+                          src={shot}
+                          alt=""
+                          fill
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          className={`object-cover object-center transition-[opacity,transform] duration-1000 ease-out ${
+                            index === activeVisionShot ? 'scale-100 opacity-100' : 'scale-[1.035] opacity-0'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <div className="relative hidden overflow-hidden border-l border-white/20 md:block">
+                      {VISION_SHOTS.map((shot, index) => (
+                        <Image
+                          key={shot}
+                          src={shot}
+                          alt=""
+                          fill
+                          sizes="50vw"
+                          className={`object-cover object-center transition-[opacity,transform] duration-1000 ease-out ${
+                            index === (activeVisionShot + 1) % VISION_SHOTS.length
+                              ? 'scale-100 opacity-100'
+                              : 'scale-[1.035] opacity-0'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
-                  <div
-                    className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-b from-black/55 to-transparent"
-                    style={{ top: '0px', transformOrigin: '0 0', transform: visionTopRot }}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-x-0 h-6 bg-gradient-to-t from-black/55 to-transparent"
-                    style={{ bottom: '20px', transformOrigin: '0 100%', transform: visionBotRot }}
-                  />
+                  <svg
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-0 top-0 z-[1] h-14 w-screen max-w-full overflow-visible md:hidden"
+                    viewBox="0 0 100 56"
+                    preserveAspectRatio="none"
+                  >
+                    <defs>
+                      <filter id="vision-top-mobile-shadow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="200" height="156">
+                        <feGaussianBlur stdDeviation="9" />
+                      </filter>
+                    </defs>
+                    <line x1="-10" y1="-2" x2="110" y2="22" stroke="rgba(0,0,0,0.85)" strokeWidth="22" vectorEffect="non-scaling-stroke" filter="url(#vision-top-mobile-shadow)" />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[124px] w-full overflow-visible md:block"
+                    preserveAspectRatio="none"
+                  >
+                    <defs>
+                      <filter id="vision-top-desktop-shadow" x="-50%" y="-75%" width="200%" height="250%">
+                        <feGaussianBlur stdDeviation="12" />
+                      </filter>
+                    </defs>
+                    <line x1="-10%" y1="-8" x2="110%" y2="88" stroke="rgba(0,0,0,0.88)" strokeWidth="28" filter="url(#vision-top-desktop-shadow)" />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="pointer-events-none absolute bottom-0 left-0 z-[1] h-14 w-screen max-w-full overflow-visible md:hidden"
+                    viewBox="0 0 100 56"
+                    preserveAspectRatio="none"
+                  >
+                    <defs>
+                      <filter id="vision-bottom-mobile-shadow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="200" height="156">
+                        <feGaussianBlur stdDeviation="9" />
+                      </filter>
+                    </defs>
+                    <line x1="-10" y1="49.6" x2="110" y2="30.4" stroke="rgba(0,0,0,0.85)" strokeWidth="22" vectorEffect="non-scaling-stroke" filter="url(#vision-bottom-mobile-shadow)" />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[100px] w-full overflow-visible md:block"
+                    preserveAspectRatio="none"
+                  >
+                    <defs>
+                      <filter id="vision-bottom-desktop-shadow" x="-50%" y="-75%" width="200%" height="250%">
+                        <feGaussianBlur stdDeviation="12" />
+                      </filter>
+                    </defs>
+                    <line x1="-10%" y1="84" x2="110%" y2="36" stroke="rgba(0,0,0,0.88)" strokeWidth="28" filter="url(#vision-bottom-desktop-shadow)" />
+                  </svg>
                   <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-4 py-8 sm:px-6 md:px-10">
                     <div className="max-w-2xl text-left">
-                      <div className="relative px-5 py-5 sm:px-8 sm:py-6 md:px-10 md:py-8">
+                      <div className="relative px-5 py-8 sm:px-8 sm:py-10 md:px-10 md:py-8">
                         <div
                           aria-hidden="true"
                           className="pointer-events-none absolute inset-0 rounded-2xl border border-white/10 bg-black/35 shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
@@ -864,6 +1133,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -906,11 +1176,15 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="fixed inset-x-0 bottom-0 z-30 overflow-hidden border-y border-white/15 bg-black/88 text-white shadow-[0_-12px_40px_rgba(0,0,0,0.45)] backdrop-blur">
+      <div
+        className={`site-contact-bar fixed inset-x-0 bottom-0 z-30 overflow-hidden border-y border-white/15 bg-black/88 text-white shadow-[0_-12px_40px_rgba(0,0,0,0.45)] backdrop-blur ${chromeCollapsed ? 'site-chrome-collapsed' : ''}`}
+        onPointerEnter={() => setChromeInteracting(true)}
+        onPointerLeave={() => setChromeInteracting(false)}
+      >
         <button
           type="button"
           aria-expanded={contactExpanded}
-          className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 text-left text-white/80 transition hover:text-white md:px-6"
+          className="site-contact-trigger mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 text-left text-white/80 transition hover:text-white md:px-6"
           onClick={() => setContactExpanded((expanded) => !expanded)}
         >
           <span className="inline-flex items-center gap-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-white">
@@ -932,7 +1206,7 @@ export default function Home() {
             </svg>
             <span>{copy.home.contact.title}</span>
           </span>
-          <span className="hidden min-w-0 flex-1 items-center justify-center gap-6 text-[11px] tracking-[0.12em] text-white/65 md:flex">
+          <span className="site-contact-summary hidden min-w-0 flex-1 items-center justify-center gap-6 text-[11px] tracking-[0.12em] text-white/65 md:flex">
             {/* compact desktop contact info */}
             <span className="flex min-w-0 items-center gap-2">
               <Image

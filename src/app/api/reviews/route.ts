@@ -7,6 +7,24 @@ interface ReviewItem {
   text: string;
 }
 
+interface PlacesV1Review {
+  rating?: number;
+  publishTime?: string;
+  relativePublishTimeDescription?: string;
+  text?: { text?: string } | string;
+  originalText?: { text?: string } | string;
+  authorAttribution?: {
+    displayName?: string;
+  };
+}
+
+interface PlacesV1Response {
+  reviews?: PlacesV1Review[];
+  error?: {
+    message?: string;
+  };
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const locale = searchParams.get('locale') || 'en';
@@ -22,11 +40,17 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Using new Places API (v1) instead of legacy
-    const url = `https://places.googleapis.com/v1/places/${placeId}?fields=reviews&key=${apiKey}`;
+    const url = `https://places.googleapis.com/v1/places/${placeId}`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+    const response = await fetch(url, {
+      headers: {
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask':
+          'reviews.rating,reviews.publishTime,reviews.relativePublishTimeDescription,reviews.text,reviews.originalText,reviews.authorAttribution.displayName',
+      },
+      cache: 'no-store',
+    });
+    const data: PlacesV1Response = await response.json();
 
     if (data.error) {
       throw new Error(data.error.message || data.error);
@@ -37,11 +61,13 @@ export async function GET(request: Request) {
     }
 
     // Transform Google reviews to our format
-    const reviews: ReviewItem[] = data.reviews.map((review: any) => ({
+    const reviews: ReviewItem[] = data.reviews.map((review) => ({
       name: review.authorAttribution?.displayName || 'Anonymous',
       rating: review.rating || 5,
-      ago: review.publishTime ? formatTimeAgo(review.publishTime, locale) : 'Recently',
-      text: review.originalText || review.text || '',
+      ago:
+        review.relativePublishTimeDescription ||
+        (review.publishTime ? formatTimeAgo(review.publishTime, locale) : locale === 'nl' ? 'Recent' : 'Recently'),
+      text: getReviewText(review),
     }));
 
     return NextResponse.json({ reviews });
@@ -52,6 +78,26 @@ export async function GET(request: Request) {
       { status: 500 }
     );
   }
+}
+
+function getReviewText(review: PlacesV1Review): string {
+  const original = review.originalText;
+  const text = review.text;
+
+  if (typeof original === 'string' && original.trim().length > 0) {
+    return original;
+  }
+  if (typeof original === 'object' && original?.text) {
+    return original.text;
+  }
+  if (typeof text === 'string' && text.trim().length > 0) {
+    return text;
+  }
+  if (typeof text === 'object' && text?.text) {
+    return text.text;
+  }
+
+  return '';
 }
 
 // Helper function to format ISO timestamp to relative time
