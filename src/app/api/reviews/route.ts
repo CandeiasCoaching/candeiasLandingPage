@@ -53,7 +53,7 @@ export async function GET(request: Request) {
     const data: PlacesV1Response = await response.json();
 
     if (data.error) {
-      throw new Error(data.error.message || data.error);
+      throw new Error(data.error.message || 'Google Places API returned an error');
     }
 
     if (!data.reviews || data.reviews.length === 0) {
