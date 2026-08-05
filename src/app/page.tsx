@@ -1042,7 +1042,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
                   <svg
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-0 top-0 z-[1] h-14 w-screen max-w-full overflow-visible md:hidden"
+                    className="pointer-events-none absolute left-0 top-0 z-[1] h-14 w-screen max-w-full [clip-path:polygon(0_0,100%_20px,100%_100%,0_100%)] md:hidden"
                     viewBox="0 0 100 56"
                     preserveAspectRatio="none"
                   >
@@ -1055,7 +1055,7 @@ export default function Home() {
                   </svg>
                   <svg
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[124px] w-full overflow-visible md:block"
+                    className="pointer-events-none absolute inset-x-0 top-0 z-[1] hidden h-[124px] w-full [clip-path:polygon(0_0,100%_80px,100%_100%,0_100%)] md:block"
                     preserveAspectRatio="none"
                   >
                     <defs>
@@ -1067,7 +1067,7 @@ export default function Home() {
                   </svg>
                   <svg
                     aria-hidden="true"
-                    className="pointer-events-none absolute bottom-0 left-0 z-[1] h-14 w-screen max-w-full overflow-visible md:hidden"
+                    className="pointer-events-none absolute bottom-0 left-0 z-[1] h-14 w-screen max-w-full [clip-path:polygon(0_0,100%_0,100%_32px,0_48px)] md:hidden"
                     viewBox="0 0 100 56"
                     preserveAspectRatio="none"
                   >
@@ -1080,7 +1080,7 @@ export default function Home() {
                   </svg>
                   <svg
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[100px] w-full overflow-visible md:block"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden h-[100px] w-full [clip-path:polygon(0_0,100%_0,100%_40px,0_80px)] md:block"
                     preserveAspectRatio="none"
                   >
                     <defs>
