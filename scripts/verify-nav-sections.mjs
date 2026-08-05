@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs';
-import { existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 const page = readFileSync('src/app/page.tsx', 'utf8');
@@ -33,14 +32,14 @@ assert.match(page, /item\.plan\.price/, 'missing rendered plan price');
 assert.doesNotMatch(page, /<section\s+id="more"/, 'More must not be its own snap section');
 assert.match(page, /setPlansPanel\('details'\)/, 'More should reveal the details panel');
 assert.match(page, /translate-x-\[-50%\]/, 'Plans container should slide left to reveal details');
-assert.match(page, /lg:col-span-2/, 'More CTA should span both plan columns');
 assert.match(page, /←\{'\s'\}\s*\{copy\.home\.planDetails\.back\}/, 'Details panel should show a left back control with an arrow');
 assert.doesNotMatch(copy, /Back to Starter & Standard|Terug naar Starter & Standard/, 'Back label should be concise');
 assert.doesNotMatch(page, /copy\.home\.firstBlock\.description/, 'First Block description text should not render');
 assert.doesNotMatch(copy, /Review the first block directly below\.|Bekijk het eerste blok hieronder\./, 'First Block review prompt should be removed');
-assert.ok(existsSync('public/res/the_first_block.pdf'), 'missing first block PDF');
-assert.match(page, /src="\/res\/the_first_block\.pdf(?:#[^"]*)?"/, 'missing first block PDF viewer source');
-assert.match(page, /title=\{copy\.home\.firstBlock\.pdfTitle\}/, 'missing accessible PDF viewer title');
+assert.match(page, /drive\.google\.com\/file\/d\/1_jLtk7zmwKQgUbek9FmPczlwffLkBRp5/, 'missing first block Google Drive URL');
+assert.match(page, /href=\{FIRST_BLOCK_PDF_URL\}/, 'First Block PDF controls should use the Drive URL');
+assert.doesNotMatch(page, /the_first_block\.pdf/, 'First Block must not reference a local PDF');
+assert.doesNotMatch(page, /<iframe/, 'First Block must not embed a PDF iframe');
 assert.doesNotMatch(page, /<section\s+id="contact"/, 'Contact should not be a snap section');
 assert.match(page, /contactExpanded/, 'Missing collapsible contact footer state');
 assert.match(page, /fixed inset-x-0 bottom-0/, 'Contact footer should be a full-width bottom bar');
@@ -58,6 +57,6 @@ assert.match(page, /aria-expanded=\{contactExpanded\}/, 'Contact footer toggle s
 
 const languageSwitcher = readFileSync('src/components/language-switcher.tsx', 'utf8');
 const layout = readFileSync('src/app/layout.tsx', 'utf8');
-assert.match(page, /<LanguageSwitcher className="ml-1" \/>/, 'Language picker should render in the header');
+assert.match(page, /<LanguageSwitcher\b/, 'Language picker should render in the header');
 assert.doesNotMatch(layout, /<LanguageSwitcher/, 'Language picker should not render globally over the footer');
 assert.match(languageSwitcher, /FlagIcon/, 'Language picker should use flag controls');

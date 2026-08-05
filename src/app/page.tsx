@@ -16,6 +16,7 @@ type ReviewItem = {
 
 const EVERFIT_ONLINE_12_WEEKS_URL = 'https://app.everfit.io/home/packages/MD799171/analytics';
 const EVERFIT_ONLINE_4_WEEKS_URL = 'https://app.everfit.io/home/packages/QC927638/analytics';
+const FIRST_BLOCK_PDF_URL = 'https://drive.google.com/file/d/1_jLtk7zmwKQgUbek9FmPczlwffLkBRp5/view?usp=drive_link';
 
 const VISION_SHOTS = [
   '/res/shots/1.jpg',
@@ -187,7 +188,6 @@ export default function Home() {
   const [contactExpanded, setContactExpanded] = useState(false);
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
   const [chromeInteracting, setChromeInteracting] = useState(false);
-  const [pdfExpanded, setPdfExpanded] = useState(false);
   const [parallaxY, setParallaxY] = useState(0);
   const [visionParallaxY, setVisionParallaxY] = useState(0);
   const [activeVisionShot, setActiveVisionShot] = useState(0);
@@ -479,7 +479,7 @@ export default function Home() {
   return (
     <main
       ref={mainRef}
-      className={`relative h-[100svh] overflow-y-auto snap-y pb-16 text-white md:h-screen md:pb-0 ${pdfExpanded ? 'md:snap-proximity' : 'md:snap-mandatory'}`}
+      className="relative h-[100svh] overflow-y-auto snap-y pb-16 text-white md:h-screen md:pb-0 md:snap-mandatory"
       style={{
         backgroundImage: "url('/mockup/bgtexture.jpg')",
         backgroundSize: '2000px 2000px',
@@ -920,7 +920,7 @@ export default function Home() {
       <section
         id="first-block"
         ref={firstBlockRef}
-        className={`relative z-10 mx-auto flex flex-col justify-start px-6 pt-32 scroll-mt-24 md:pt-36 ${pdfExpanded ? 'min-h-fit' : 'min-h-[100svh] snap-end md:min-h-screen'}`}
+        className="relative z-10 mx-auto flex min-h-[100svh] snap-end flex-col justify-start px-6 pt-32 scroll-mt-24 md:min-h-screen md:pt-36"
       >
         <div className="mx-auto w-full max-w-6xl">
           <div className="mb-10 grid items-center gap-10 md:grid-cols-2 md:gap-12">
@@ -948,42 +948,31 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-black/25 shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-sm md:mt-12">
-            <div
-              className="overflow-hidden transition-[height] duration-500 ease-in-out"
-              style={{ height: pdfExpanded ? '70svh' : '0px' }}
-            >
-              <iframe
-                src="/res/the_first_block.pdf#toolbar=0&navpanes=0&scrollbar=0"
-                title={copy.home.firstBlock.pdfTitle}
-                className="w-full bg-white"
-                style={{ height: 'calc(100% + 40px)', marginTop: '-40px' }}
-              />
-            </div>
             <div className="flex flex-col items-start gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-5">
-              <button
-                type="button"
-                onClick={() => setPdfExpanded((v) => !v)}
+              <a
+                href={FIRST_BLOCK_PDF_URL}
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/70 transition hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${pdfExpanded ? 'rotate-180' : ''}`}
+                  className="h-4 w-4 shrink-0"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
                 >
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  <path d="M11 3a1 1 0 100 2h2.586L8.293 10.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                 </svg>
-                {pdfExpanded
-                  ? (locale === 'nl' ? 'PDF verbergen' : 'Hide PDF')
-                  : (locale === 'nl' ? 'PDF bekijken' : 'View PDF')}
-              </button>
+                {locale === 'nl' ? 'PDF bekijken' : 'View PDF'}
+              </a>
               <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/70 sm:gap-3 sm:text-sm sm:tracking-[0.2em]">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
                 {locale === 'nl' ? 'Downloaden' : 'Download'}
-                <a href="/res/the_first_block.pdf" download className="transition hover:text-white">
+                <a href={FIRST_BLOCK_PDF_URL} target="_blank" rel="noreferrer" className="transition hover:text-white">
                   PDF
                 </a>
                 <span className="text-white/30">|</span>
