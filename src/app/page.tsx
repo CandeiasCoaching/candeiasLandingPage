@@ -14,8 +14,10 @@ type ReviewItem = {
   text: string;
 };
 
-const EVERFIT_ONLINE_12_WEEKS_URL = 'https://app.everfit.io/home/packages/MD799171/analytics';
-const EVERFIT_ONLINE_4_WEEKS_URL = 'https://app.everfit.io/home/packages/QC927638/analytics';
+const TRAINERIZE_ONLINE_12_WEEKS_URL =
+  'https://www.trainerize.me/profile/candeiascoaching/?planGUID=ff95021f959b4a18b7c870fbad1b924b';
+const TRAINERIZE_ONLINE_4_WEEKS_URL =
+  'https://www.trainerize.me/profile/candeiascoaching/?planGUID=4275213e27be44c4ac1732e079bafe06';
 const FIRST_BLOCK_PDF_URL = 'https://drive.google.com/file/d/1_jLtk7zmwKQgUbek9FmPczlwffLkBRp5/view?usp=drive_link';
 
 const VISION_SHOTS = [
@@ -240,11 +242,11 @@ export default function Home() {
   const nextReview = reviews[(activeReview + 1) % reviews.length];
 
   const additionalPlans: Array<{ id: string; plan: PlanDetailCard; ctaHref?: string }> = [
-    { id: 'starter', plan: copy.home.planDetails.starter, ctaHref: EVERFIT_ONLINE_12_WEEKS_URL },
+    { id: 'starter', plan: copy.home.planDetails.starter, ctaHref: TRAINERIZE_ONLINE_12_WEEKS_URL },
     { id: 'standard', plan: copy.home.planDetails.standard },
     { id: 'advanced', plan: copy.home.planDetails.advanced },
     { id: 'premium', plan: copy.home.planDetails.premium },
-    { id: 'online4', plan: copy.home.planDetails.online4, ctaHref: EVERFIT_ONLINE_4_WEEKS_URL },
+    { id: 'online4', plan: copy.home.planDetails.online4, ctaHref: TRAINERIZE_ONLINE_4_WEEKS_URL },
     { id: 'tenSessions', plan: copy.home.planDetails.tenSessions },
     { id: 'varia', plan: copy.home.planDetails.varia },
   ];
@@ -810,7 +812,7 @@ export default function Home() {
                     id: 'starter',
                     ref: starterRef,
                     plan: copy.home.planDetails.starter,
-                    ctaHref: EVERFIT_ONLINE_12_WEEKS_URL,
+                    ctaHref: TRAINERIZE_ONLINE_12_WEEKS_URL,
                   },
                   { id: 'standard', ref: standardRef, plan: copy.home.planDetails.standard },
                 ].map((item) => (

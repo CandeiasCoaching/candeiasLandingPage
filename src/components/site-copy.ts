@@ -146,7 +146,7 @@ export const siteCopy = {
             "1 Follow up call per week",
             "Constant follow up via Whatsapp",
           ],
-          price: "500,00 €",
+          price: "€166 per month",
         },
         standard: {
           title: "Standard Coaching (12 Sessions)",
@@ -221,7 +221,7 @@ export const siteCopy = {
             "1 Follow up call per week",
             "Constant follow up via Whatsapp",
           ],
-          price: "500,00 €",
+          price: "€166 per month",
         },
         friendsFamily: {
           title: "Friends & Family",
@@ -346,7 +346,7 @@ export const siteCopy = {
             "1 opvolggesprek per week",
             "Constante opvolging via Whatsapp",
           ],
-          price: "500,00 €",
+          price: "€166 per maand",
         },
         standard: {
           title: "Standard Coaching (12 Sessies)",
@@ -421,7 +421,7 @@ export const siteCopy = {
             "1 opvolggesprek per week",
             "Constante opvolging via Whatsapp",
           ],
-          price: "500,00 €",
+          price: "€166 per maand",
         },
         friendsFamily: {
           title: "Friends & Family",
